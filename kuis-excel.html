@@ -188,6 +188,23 @@
             display: block;
         }
 
+        /* ===== BACK LINK ===== */
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            color: var(--muted);
+            font-size: 13px;
+            text-decoration: none;
+            margin-bottom: 20px;
+            transition: color 0.2s;
+            font-weight: 500;
+        }
+
+        .back-link:hover { color: var(--accent-light); }
+
+        .back-link i { font-size: 11px; }
+
         /* ===== HERO ===== */
         .hero-visual {
             position: relative;
@@ -868,6 +885,10 @@
 
         <!-- ===== QUIZ ===== -->
         <div class="scr" id="quizScr">
+            <a href="index.html" class="back-link">
+                <i class="fas fa-arrow-left"></i> Kembali ke menu
+            </a>
+
             <div class="q-top">
                 <span class="q-prog" id="qProg">1 / 10</span>
                 <div class="q-timer" id="qTimer">
@@ -941,6 +962,10 @@
             <button class="btn-go" style="margin-top:24px" onclick="restart()">
                 <i class="fas fa-redo" style="margin-right:8px"></i> Ulangi Kuis
             </button>
+
+            <a href="index.html" class="back-link" style="margin-top:16px">
+                <i class="fas fa-arrow-left"></i> Kembali ke menu
+            </a>
 
             <div class="foot">
                 KPU Kabupaten Sumba Barat Daya<br>
