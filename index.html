@@ -17,6 +17,8 @@
             --blue: #4a9eff;
             --green: #2ecc71;
             --orange: #f59e0b;
+            --pink: #c026d3;
+            --purple: #7c3aed;
         }
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
@@ -89,9 +91,34 @@
         .a-icon.blue { background: linear-gradient(135deg, #2b6cb0, #4a9eff); }
         .a-icon.green { background: linear-gradient(135deg, #1d8348, #2ecc71); }
         .a-icon.orange { background: linear-gradient(135deg, #d97706, #f59e0b); }
+        .a-icon.pink { background: linear-gradient(135deg, #a21caf, #e879f9); }
+        .a-icon.purple { background: linear-gradient(135deg, #6d28d9, #a78bfa); }
         .a-text h2 { font-size: 16px; font-weight: 700; margin-bottom: 2px; }
         .a-text p { font-size: 12px; color: var(--muted); line-height: 1.4; }
-        .a-arrow { margin-left: auto; color: var(--muted); font-size: 14px; }
+        .a-arrow { margin-left: auto; color: var(--muted); font-size: 14px; flex-shrink: 0; }
+        .a-names {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 4px;
+            margin-top: 6px;
+        }
+        .a-names span {
+            display: inline-flex;
+            align-items: center;
+            gap: 3px;
+            padding: 2px 8px;
+            border-radius: 6px;
+            font-size: 10px;
+            font-weight: 600;
+            line-height: 1.5;
+        }
+        .a-names span.red { background: rgba(230,57,70,0.12); color: #ff6b6b; }
+        .a-names span.blue { background: rgba(74,158,255,0.12); color: #4a9eff; }
+        .a-names span.green { background: rgba(46,204,113,0.12); color: #2ecc71; }
+        .a-names span.orange { background: rgba(245,158,11,0.12); color: #f59e0b; }
+        .a-names span.pink { background: rgba(232,121,249,0.12); color: #e879f9; }
+        .a-names span.purple { background: rgba(167,139,250,0.12); color: #a78bfa; }
+        .a-names span.muted { background: rgba(122,139,181,0.1); color: var(--muted); }
         .foot { margin-top: 28px; font-size: 11px; color: var(--muted); opacity: 0.4; line-height: 1.5; }
     </style>
 </head>
@@ -112,6 +139,11 @@
                 <div class="a-text">
                     <h2>Jaringan Komputer</h2>
                     <p>Topologi, perangkat jaringan, IP Address, model OSI</p>
+                    <div class="a-names">
+                        <span class="red">Osta</span>
+                        <span class="red">Jelin</span>
+                        <span class="red">Melan</span>
+                    </div>
                 </div>
                 <span class="a-arrow"><i class="fas fa-chevron-right"></i></span>
             </a>
@@ -120,6 +152,9 @@
                 <div class="a-text">
                     <h2>Microsoft Word</h2>
                     <p>Mail Merge, format dokumen, header/footer, tabel</p>
+                    <div class="a-names">
+                        <span class="muted">Semua</span>
+                    </div>
                 </div>
                 <span class="a-arrow"><i class="fas fa-chevron-right"></i></span>
             </a>
@@ -128,6 +163,9 @@
                 <div class="a-text">
                     <h2>Microsoft Excel</h2>
                     <p>SUM, AVERAGE, IF, VLOOKUP, COUNTIF, grafik</p>
+                    <div class="a-names">
+                        <span class="muted">Semua</span>
+                    </div>
                 </div>
                 <span class="a-arrow"><i class="fas fa-chevron-right"></i></span>
             </a>
@@ -136,6 +174,33 @@
                 <div class="a-text">
                     <h2>Produksi Video</h2>
                     <p>Storyboard, shooting, lighting, audio, post-production</p>
+                    <div class="a-names">
+                        <span class="orange">Anggi</span>
+                        <span class="orange">Andin</span>
+                    </div>
+                </div>
+                <span class="a-arrow"><i class="fas fa-chevron-right"></i></span>
+            </a>
+            <a href="kuis-desaingrafis.html">
+                <div class="a-icon pink"><i class="fas fa-palette"></i></div>
+                <div class="a-text">
+                    <h2>Desain Grafis (Canva)</h2>
+                    <p>Template, grid, effects, kolaborasi, export</p>
+                    <div class="a-names">
+                        <span class="pink">Anggi</span>
+                        <span class="pink">Andin</span>
+                    </div>
+                </div>
+                <span class="a-arrow"><i class="fas fa-chevron-right"></i></span>
+            </a>
+            <a href="kuis-powerpoint.html">
+                <div class="a-icon purple"><i class="fas fa-desktop"></i></div>
+                <div class="a-text">
+                    <h2>Microsoft PowerPoint</h2>
+                    <p>Slide master, animasi, transisi, chart, presenter view</p>
+                    <div class="a-names">
+                        <span class="muted">Semua</span>
+                    </div>
                 </div>
                 <span class="a-arrow"><i class="fas fa-chevron-right"></i></span>
             </a>
