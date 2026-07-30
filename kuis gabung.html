@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kuis PKL - KPU Kab. Sumba Barat Daya</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800;900&family=JetBrains+Mono:wght@700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <style>
+        :root {
+            --bg: #0b0e14;
+            --card: #151a28;
+            --border: #252d44;
+            --fg: #eaf0ff;
+            --muted: #7a8bb5;
+            --red: #e63946;
+            --blue: #4a9eff;
+            --green: #2ecc71;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Outfit', sans-serif;
+            background: var(--bg);
+            color: var(--fg);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 24px;
+            background-image:
+                radial-gradient(ellipse at 20% 20%, rgba(230,57,70,0.06) 0%, transparent 60%),
+                radial-gradient(ellipse at 80% 80%, rgba(46,204,113,0.06) 0%, transparent 60%),
+                radial-gradient(ellipse at 50% 50%, rgba(74,158,255,0.04) 0%, transparent 60%);
+        }
+        .wrap {
+            max-width: 520px;
+            width: 100%;
+            text-align: center;
+        }
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 10px 20px;
+            margin-bottom: 28px;
+            font-size: 12px;
+            color: var(--muted);
+        }
+        .badge .emblem {
+            width: 34px; height: 34px;
+            background: linear-gradient(135deg, var(--red), var(--green));
+            border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            font-weight: 700; font-size: 9px; color: #fff;
+        }
+        .badge strong { color: var(--fg); font-size: 13px; display: block; }
+        h1 {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 22px;
+            font-weight: 700;
+            margin-bottom: 6px;
+        }
+        .sub { color: var(--muted); font-size: 14px; margin-bottom: 32px; line-height: 1.6; }
+        .cards { display: flex; flex-direction: column; gap: 14px; }
+        a {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            padding: 20px 22px;
+            text-decoration: none;
+            color: var(--fg);
+            transition: all 0.3s ease;
+        }
+        a:hover { transform: translateY(-3px); border-color: var(--muted); }
+        .a-icon {
+            width: 52px; height: 52px;
+            border-radius: 14px;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 22px; color: #fff; flex-shrink: 0;
+        }
+        .a-icon.red { background: linear-gradient(135deg, #e63946, #ff6b6b); }
+        .a-icon.blue { background: linear-gradient(135deg, #2b6cb0, #4a9eff); }
+        .a-icon.green { background: linear-gradient(135deg, #1d8348, #2ecc71); }
+        .a-text h2 { font-size: 16px; font-weight: 700; margin-bottom: 2px; }
+        .a-text p { font-size: 12px; color: var(--muted); line-height: 1.4; }
+        .a-arrow { margin-left: auto; color: var(--muted); font-size: 14px; }
+        .foot { margin-top: 28px; font-size: 11px; color: var(--muted); opacity: 0.4; line-height: 1.5; }
+    </style>
+</head>
+<body>
+    <div class="wrap">
+        <div class="badge">
+            <div class="emblem">KPU</div>
+            <div>
+                <strong>KPU Kabupaten Sumba Barat Daya</strong>
+                <span>Program Praktik Kerja Lapangan</span>
+            </div>
+        </div>
+        <h1>Kuis Evaluasi PKL</h1>
+        <p class="sub">Pilih kuis yang ingin dikerjakan.<br>Semua kuis terdiri dari 10 soal pilihan ganda.</p>
+        <div class="cards">
+            <a href="kuis-jaringan.html">
+                <div class="a-icon red"><i class="fas fa-network-wired"></i></div>
+                <div class="a-text">
+                    <h2>Jaringan Komputer</h2>
+                    <p>Topologi, perangkat jaringan, IP Address, model OSI</p>
+                </div>
+                <span class="a-arrow"><i class="fas fa-chevron-right"></i></span>
+            </a>
+            <a href="kuis-word.html">
+                <div class="a-icon blue"><i class="fas fa-file-word"></i></div>
+                <div class="a-text">
+                    <h2>Microsoft Word</h2>
+                    <p>Mail Merge, format dokumen, header/footer, tabel</p>
+                </div>
+                <span class="a-arrow"><i class="fas fa-chevron-right"></i></span>
+            </a>
+            <a href="kuis-excel.html">
+                <div class="a-icon green"><i class="fas fa-table"></i></div>
+                <div class="a-text">
+                    <h2>Microsoft Excel</h2>
+                    <p>SUM, AVERAGE, IF, VLOOKUP, COUNTIF, grafik</p>
+                </div>
+                <span class="a-arrow"><i class="fas fa-chevron-right"></i></span>
+            </a>
+        </div>
+        <div class="foot">
+            KPU Kabupaten Sumba Barat Daya<br>
+            Nusa Tenggara Timur
+        </div>
+    </div>
+</body>
+</html>
