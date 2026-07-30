@@ -190,6 +190,23 @@
             font-size: 13px;
         }
 
+        /* ===== BACK LINK ===== */
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            color: var(--muted);
+            font-size: 13px;
+            text-decoration: none;
+            margin-bottom: 20px;
+            transition: color 0.2s;
+            font-weight: 500;
+        }
+
+        .back-link:hover { color: var(--accent); }
+
+        .back-link i { font-size: 11px; }
+
         /* ===== HERO ===== */
         .hero-icon {
             width: 100px;
@@ -783,6 +800,10 @@
 
         <!-- ===== QUIZ SCREEN ===== -->
         <div class="screen" id="quizScreen">
+            <a href="index.html" class="back-link">
+                <i class="fas fa-arrow-left"></i> Kembali ke menu
+            </a>
+
             <div class="quiz-header">
                 <span class="quiz-progress-text" id="progressText">1 / 10</span>
                 <div class="quiz-timer" id="timerDisplay">
@@ -856,6 +877,10 @@
             <button class="btn-primary" style="margin-top:24px" onclick="restartQuiz()">
                 <i class="fas fa-redo" style="margin-right:8px"></i> Ulangi Kuis
             </button>
+
+            <a href="index.html" class="back-link" style="margin-top:16px">
+                <i class="fas fa-arrow-left"></i> Kembali ke menu
+            </a>
 
             <div class="app-footer">
                 KPU Kabupaten Sumba Barat Daya<br>
