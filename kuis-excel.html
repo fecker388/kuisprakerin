@@ -156,7 +156,7 @@
         .kpu-badge {
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 12px;
             background: var(--card);
             border: 1px solid var(--border);
             border-radius: 10px;
@@ -167,19 +167,13 @@
             letter-spacing: 0.3px;
         }
 
-        .kpu-emblem {
-            width: 34px;
-            height: 34px;
-            background: linear-gradient(135deg, var(--red), var(--accent));
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: 700;
-            font-size: 9px;
-            color: #fff;
+        /* ===== KPU LOGO IMAGE ===== */
+        .kpu-logo {
+            width: 40px;
+            height: 40px;
+            object-fit: contain;
             flex-shrink: 0;
-            border: 2px solid rgba(231,76,60,0.25);
+            border-radius: 6px;
         }
 
         .kpu-badge strong {
@@ -842,8 +836,14 @@
 
         <!-- ===== START ===== -->
         <div class="scr active" id="startScr">
+
+            <!-- Tombol Kembali ke index.html -->
+            <a href="index.html" class="back-link">
+                <i class="fas fa-arrow-left"></i> Kembali ke Menu Utama
+            </a>
+
             <div class="kpu-badge">
-                <div class="kpu-emblem">KPU</div>
+                <img src="logo-kpu.png" alt="Logo KPU" class="kpu-logo">
                 <div>
                     <strong>KPU Kabupaten Sumba Barat Daya</strong>
                     <span>Program Praktik Kerja Lapangan</span>
@@ -886,7 +886,7 @@
         <!-- ===== QUIZ ===== -->
         <div class="scr" id="quizScr">
             <a href="index.html" class="back-link">
-                <i class="fas fa-arrow-left"></i> Kembali ke menu
+                <i class="fas fa-arrow-left"></i> Kembali ke Menu Utama
             </a>
 
             <div class="q-top">
@@ -916,7 +916,7 @@
         <!-- ===== RESULT ===== -->
         <div class="scr" id="resultScr">
             <div class="kpu-badge" style="margin-bottom:20px">
-                <div class="kpu-emblem">KPU</div>
+                <img src="logo-kpu.png" alt="Logo KPU" class="kpu-logo">
                 <div>
                     <strong>KPU Kabupaten Sumba Barat Daya</strong>
                     <span>Hasil Evaluasi PKL</span>
@@ -964,7 +964,7 @@
             </button>
 
             <a href="index.html" class="back-link" style="margin-top:16px">
-                <i class="fas fa-arrow-left"></i> Kembali ke menu
+                <i class="fas fa-arrow-left"></i> Kembali ke Menu Utama
             </a>
 
             <div class="foot">
