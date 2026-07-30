@@ -1,0 +1,1346 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kuis Microsoft Word - KPU Kab. Sumba Barat Daya</title>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <style>
+        :root {
+            --bg: #0f1117;
+            --bg2: #161922;
+            --card: #1c1f2e;
+            --card-hover: #242840;
+            --border: #2d3250;
+            --fg: #eef1fa;
+            --muted: #8b92b0;
+            --accent: #2b6cb0;
+            --accent-light: #4a9eff;
+            --accent-glow: rgba(74,158,255,0.15);
+            --orange: #e8753a;
+            --orange-light: #f5a623;
+            --red: #e63946;
+            --green: #38b27a;
+            --danger: #ff4d6a;
+            --warning: #f5a623;
+            --success: #38b27a;
+            --radius: 16px;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background: var(--bg);
+            color: var(--fg);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* ===== BACKGROUND ===== */
+        .bg-layer {
+            position: fixed;
+            inset: 0;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        .bg-gradient {
+            background:
+                radial-gradient(ellipse 600px 400px at 15% 20%, rgba(43,108,176,0.1) 0%, transparent 70%),
+                radial-gradient(ellipse 500px 500px at 85% 80%, rgba(232,117,58,0.06) 0%, transparent 70%),
+                radial-gradient(ellipse 400px 300px at 50% 50%, rgba(74,158,255,0.04) 0%, transparent 70%);
+        }
+
+        .bg-dots {
+            background-image: radial-gradient(circle, rgba(74,158,255,0.06) 1px, transparent 1px);
+            background-size: 32px 32px;
+        }
+
+        /* ===== DECORATIVE LINES ===== */
+        .deco-line {
+            position: fixed;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        .deco-line-1 {
+            top: 0;
+            left: 80px;
+            width: 1px;
+            height: 100vh;
+            background: linear-gradient(to bottom, transparent, rgba(74,158,255,0.08), transparent);
+        }
+
+        .deco-line-2 {
+            top: 0;
+            right: 120px;
+            width: 1px;
+            height: 100vh;
+            background: linear-gradient(to bottom, transparent, rgba(232,117,58,0.06), transparent);
+        }
+
+        /* ===== FLOATING SHAPES ===== */
+        .float-shapes {
+            position: fixed;
+            inset: 0;
+            z-index: 0;
+            pointer-events: none;
+            overflow: hidden;
+        }
+
+        .shape {
+            position: absolute;
+            border: 1px solid rgba(74,158,255,0.1);
+            animation: floatShape 16s ease-in-out infinite;
+        }
+
+        .shape-1 {
+            width: 40px; height: 40px;
+            border-radius: 10px;
+            top: 12%; left: 8%;
+            animation-delay: 0s;
+            transform: rotate(45deg);
+        }
+
+        .shape-2 {
+            width: 24px; height: 24px;
+            border-radius: 50%;
+            top: 60%; right: 10%;
+            animation-delay: 3s;
+            border-color: rgba(232,117,58,0.12);
+        }
+
+        .shape-3 {
+            width: 30px; height: 30px;
+            border-radius: 6px;
+            bottom: 20%; left: 15%;
+            animation-delay: 6s;
+        }
+
+        .shape-4 {
+            width: 18px; height: 18px;
+            border-radius: 50%;
+            top: 30%; right: 20%;
+            animation-delay: 9s;
+            border-color: rgba(56,178,122,0.12);
+        }
+
+        @keyframes floatShape {
+            0%, 100% { transform: translateY(0) rotate(0deg); opacity: 0.4; }
+            25% { transform: translateY(-20px) rotate(5deg); opacity: 0.7; }
+            50% { transform: translateY(-10px) rotate(-3deg); opacity: 0.5; }
+            75% { transform: translateY(-25px) rotate(2deg); opacity: 0.6; }
+        }
+
+        /* ===== MAIN CONTAINER ===== */
+        .app-container {
+            position: relative;
+            z-index: 1;
+            max-width: 740px;
+            margin: 0 auto;
+            padding: 24px 16px;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* ===== SCREENS ===== */
+        .screen {
+            display: none;
+            width: 100%;
+            animation: screenIn 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+
+        .screen.active {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        @keyframes screenIn {
+            from { opacity: 0; transform: translateY(24px) scale(0.98); }
+            to { opacity: 1; transform: translateY(0) scale(1); }
+        }
+
+        /* ===== KPU BADGE ===== */
+        .kpu-badge {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 10px 18px;
+            margin-bottom: 24px;
+            font-size: 12px;
+            color: var(--muted);
+            letter-spacing: 0.3px;
+        }
+
+        .kpu-emblem {
+            width: 34px;
+            height: 34px;
+            background: linear-gradient(135deg, var(--red), var(--accent));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 9px;
+            color: #fff;
+            flex-shrink: 0;
+            border: 2px solid rgba(230,57,70,0.25);
+        }
+
+        .kpu-badge-text strong {
+            color: var(--fg);
+            font-size: 13px;
+            display: block;
+        }
+
+        /* ===== HERO ===== */
+        .hero-icon-wrap {
+            position: relative;
+            margin-bottom: 24px;
+        }
+
+        .hero-icon {
+            width: 100px;
+            height: 100px;
+            background: linear-gradient(135deg, var(--accent), var(--accent-light));
+            border-radius: 26px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 46px;
+            color: #fff;
+            box-shadow: 0 16px 48px rgba(74,158,255,0.2);
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero-icon-ring {
+            position: absolute;
+            width: 130px;
+            height: 130px;
+            border: 2px dashed rgba(74,158,255,0.15);
+            border-radius: 36px;
+            top: -15px;
+            left: -15px;
+            animation: ringRotate 20s linear infinite;
+        }
+
+        @keyframes ringRotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .hero-title {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 26px;
+            font-weight: 700;
+            text-align: center;
+            margin-bottom: 6px;
+            line-height: 1.3;
+        }
+
+        .hero-title .hl {
+            background: linear-gradient(135deg, var(--accent-light), var(--orange-light));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero-sub {
+            color: var(--muted);
+            font-size: 14px;
+            text-align: center;
+            margin-bottom: 32px;
+            line-height: 1.7;
+        }
+
+        .info-row {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 32px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .info-chip {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 10px 16px;
+            font-size: 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--muted);
+        }
+
+        .info-chip i { color: var(--accent-light); }
+
+        .btn-start {
+            background: linear-gradient(135deg, var(--accent), var(--accent-light));
+            color: #fff;
+            border: none;
+            padding: 16px 52px;
+            border-radius: 14px;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            letter-spacing: 0.3px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-start::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .btn-start:hover::after {
+            left: 100%;
+        }
+
+        .btn-start:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 36px rgba(74,158,255,0.3);
+        }
+
+        .btn-start:active { transform: translateY(0); }
+
+        /* ===== QUIZ SCREEN ===== */
+        .quiz-top {
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 14px;
+        }
+
+        .q-progress {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 14px;
+            color: var(--accent-light);
+            font-weight: 700;
+        }
+
+        .q-timer {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 14px;
+            color: var(--muted);
+            background: var(--card);
+            padding: 6px 14px;
+            border-radius: 8px;
+            border: 1px solid var(--border);
+            transition: all 0.3s ease;
+        }
+
+        .q-timer.danger {
+            color: var(--danger);
+            border-color: rgba(255,77,106,0.4);
+            background: rgba(255,77,106,0.06);
+            animation: blinkDanger 0.5s ease-in-out infinite alternate;
+        }
+
+        @keyframes blinkDanger { to { opacity: 0.6; } }
+
+        .bar-track {
+            width: 100%;
+            height: 5px;
+            background: var(--bg2);
+            border-radius: 10px;
+            margin-bottom: 24px;
+            overflow: hidden;
+        }
+
+        .bar-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--accent), var(--accent-light));
+            border-radius: 10px;
+            transition: width 0.5s ease;
+        }
+
+        .q-card {
+            width: 100%;
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 28px 24px;
+            margin-bottom: 18px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .q-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+            background: linear-gradient(to bottom, var(--accent-light), var(--orange));
+            border-radius: 0 4px 4px 0;
+        }
+
+        .q-num {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 11px;
+            color: var(--accent-light);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 12px;
+            padding-left: 12px;
+        }
+
+        .q-text {
+            font-size: 17px;
+            font-weight: 600;
+            line-height: 1.65;
+            padding-left: 12px;
+        }
+
+        .opts {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-bottom: 18px;
+        }
+
+        .opt {
+            width: 100%;
+            background: var(--card);
+            border: 2px solid var(--border);
+            border-radius: 12px;
+            padding: 14px 18px;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-size: 14px;
+            color: var(--fg);
+            cursor: pointer;
+            text-align: left;
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            transition: all 0.25s ease;
+            line-height: 1.5;
+        }
+
+        .opt:hover:not(.locked) {
+            border-color: var(--accent-light);
+            background: var(--card-hover);
+            transform: translateX(6px);
+        }
+
+        .opt-label {
+            width: 30px;
+            height: 30px;
+            border-radius: 8px;
+            background: var(--bg2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'JetBrains Mono', monospace;
+            font-weight: 700;
+            font-size: 12px;
+            color: var(--muted);
+            flex-shrink: 0;
+            transition: all 0.25s ease;
+            margin-top: 1px;
+        }
+
+        .opt:hover:not(.locked) .opt-label {
+            background: var(--accent-light);
+            color: #fff;
+        }
+
+        .opt.right {
+            border-color: var(--success);
+            background: rgba(56,178,122,0.06);
+        }
+
+        .opt.right .opt-label {
+            background: var(--success);
+            color: var(--bg);
+        }
+
+        .opt.wrong {
+            border-color: var(--danger);
+            background: rgba(255,77,106,0.06);
+        }
+
+        .opt.wrong .opt-label {
+            background: var(--danger);
+            color: #fff;
+        }
+
+        .opt.locked { cursor: default; opacity: 0.5; }
+        .opt.right.locked, .opt.wrong.locked { opacity: 1; }
+
+        /* ===== FEEDBACK ===== */
+        .fb {
+            width: 100%;
+            border-radius: 12px;
+            padding: 16px 20px;
+            margin-bottom: 16px;
+            display: none;
+            align-items: flex-start;
+            gap: 12px;
+            font-size: 13px;
+            line-height: 1.6;
+            animation: screenIn 0.3s ease;
+        }
+
+        .fb.show { display: flex; }
+
+        .fb.fb-ok {
+            background: rgba(56,178,122,0.08);
+            border: 1px solid rgba(56,178,122,0.25);
+            color: var(--success);
+        }
+
+        .fb.fb-no {
+            background: rgba(255,77,106,0.08);
+            border: 1px solid rgba(255,77,106,0.25);
+            color: var(--danger);
+        }
+
+        .fb i { font-size: 18px; margin-top: 2px; flex-shrink: 0; }
+
+        .btn-next {
+            background: var(--card);
+            border: 2px solid var(--border);
+            color: var(--fg);
+            padding: 14px 36px;
+            border-radius: 12px;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: none;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-next.show { display: flex; }
+
+        .btn-next:hover {
+            border-color: var(--accent-light);
+            background: var(--card-hover);
+            transform: translateY(-2px);
+        }
+
+        /* ===== RESULT ===== */
+        .result-box {
+            width: 100%;
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 36px 28px;
+            text-align: center;
+            margin-bottom: 24px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .result-box::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: linear-gradient(90deg, var(--accent), var(--accent-light), var(--orange));
+        }
+
+        .score-ring-wrap {
+            width: 160px;
+            height: 160px;
+            margin: 0 auto 24px;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+        }
+
+        .score-ring-wrap svg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            transform: rotate(-90deg);
+        }
+
+        .ring-bg { fill: none; stroke: var(--bg2); stroke-width: 8; }
+        .ring-fg { fill: none; stroke-width: 8; stroke-linecap: round; transition: stroke-dashoffset 1.5s ease; }
+
+        .s-val {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 44px;
+            font-weight: 700;
+            z-index: 1;
+        }
+
+        .s-label {
+            font-size: 13px;
+            color: var(--muted);
+            z-index: 1;
+        }
+
+        .r-msg {
+            font-size: 22px;
+            font-weight: 800;
+            margin-bottom: 8px;
+        }
+
+        .r-detail {
+            color: var(--muted);
+            font-size: 14px;
+            margin-bottom: 24px;
+            line-height: 1.6;
+        }
+
+        .stats {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+        }
+
+        .stat { text-align: center; }
+
+        .stat-n {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 24px;
+            font-weight: 700;
+        }
+
+        .stat-n.g { color: var(--success); }
+        .stat-n.r { color: var(--danger); }
+        .stat-n.o { color: var(--orange-light); }
+
+        .stat-d {
+            font-size: 12px;
+            color: var(--muted);
+            margin-top: 4px;
+        }
+
+        /* ===== REVIEW ===== */
+        .rev-section { width: 100%; margin-top: 8px; }
+
+        .rev-btn {
+            width: 100%;
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 14px 20px;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--muted);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            transition: all 0.25s ease;
+        }
+
+        .rev-btn:hover {
+            border-color: var(--accent-light);
+            color: var(--fg);
+        }
+
+        .rev-list {
+            display: none;
+            flex-direction: column;
+            gap: 10px;
+            margin-top: 10px;
+            animation: screenIn 0.3s ease;
+        }
+
+        .rev-list.show { display: flex; }
+
+        .rev-item {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 16px 20px;
+            text-align: left;
+        }
+
+        .rev-item.ok { border-left: 4px solid var(--success); }
+        .rev-item.no { border-left: 4px solid var(--danger); }
+
+        .rev-q {
+            font-size: 13px;
+            font-weight: 600;
+            margin-bottom: 8px;
+            line-height: 1.5;
+        }
+
+        .rev-a {
+            font-size: 12px;
+            color: var(--muted);
+            line-height: 1.5;
+        }
+
+        .rev-a .c { color: var(--success); font-weight: 600; }
+        .rev-a .w { color: var(--danger); text-decoration: line-through; opacity: 0.7; font-weight: 600; }
+
+        .rev-exp {
+            font-size: 12px;
+            color: var(--muted);
+            line-height: 1.5;
+            font-style: italic;
+            opacity: 0.7;
+            margin-top: 4px;
+        }
+
+        /* ===== TOAST ===== */
+        .toast-box {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 999;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .toast {
+            padding: 12px 20px;
+            border-radius: 10px;
+            font-size: 13px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            animation: tIn 0.3s ease, tOut 0.3s ease 2.5s forwards;
+        }
+
+        .toast-ok {
+            background: rgba(56,178,122,0.12);
+            border: 1px solid rgba(56,178,122,0.3);
+            color: var(--success);
+        }
+
+        .toast-err {
+            background: rgba(255,77,106,0.12);
+            border: 1px solid rgba(255,77,106,0.3);
+            color: var(--danger);
+        }
+
+        @keyframes tIn {
+            from { opacity: 0; transform: translateX(40px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        @keyframes tOut {
+            from { opacity: 1; }
+            to { opacity: 0; transform: translateY(-10px); }
+        }
+
+        /* ===== CONFETTI ===== */
+        .confetti-cv {
+            position: fixed;
+            inset: 0;
+            z-index: 50;
+            pointer-events: none;
+        }
+
+        /* ===== FOOTER ===== */
+        .foot {
+            margin-top: 28px;
+            font-size: 11px;
+            color: var(--muted);
+            opacity: 0.45;
+            text-align: center;
+            line-height: 1.5;
+        }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 600px) {
+            .hero-title { font-size: 20px; }
+            .q-text { font-size: 15px; }
+            .q-card { padding: 22px 16px; }
+            .opt { padding: 12px 14px; font-size: 13px; }
+            .stats { gap: 18px; }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="bg-layer bg-gradient"></div>
+    <div class="bg-layer bg-dots"></div>
+    <div class="deco-line deco-line-1"></div>
+    <div class="deco-line deco-line-2"></div>
+    <div class="float-shapes">
+        <div class="shape shape-1"></div>
+        <div class="shape shape-2"></div>
+        <div class="shape shape-3"></div>
+        <div class="shape shape-4"></div>
+    </div>
+
+    <div class="toast-box" id="toastBox"></div>
+    <canvas class="confetti-cv" id="confettiCv"></canvas>
+
+    <div class="app-container">
+
+        <!-- ===== START ===== -->
+        <div class="screen active" id="startScreen">
+            <div class="kpu-badge">
+                <div class="kpu-emblem">KPU</div>
+                <div class="kpu-badge-text">
+                    <strong>KPU Kabupaten Sumba Barat Daya</strong>
+                    <span>Program Praktik Kerja Lapangan</span>
+                </div>
+            </div>
+
+            <div class="hero-icon-wrap">
+                <div class="hero-icon-ring"></div>
+                <div class="hero-icon">
+                    <i class="fas fa-file-word"></i>
+                </div>
+            </div>
+
+            <h1 class="hero-title">Kuis <span class="hl">Microsoft Word</span></h1>
+            <p class="hero-sub">
+                Evaluasi kemampuan pengolah dokumen Microsoft Word<br>
+                untuk siswi PKL di KPU Kab. Sumba Barat Daya.
+            </p>
+
+            <div class="info-row">
+                <div class="info-chip"><i class="fas fa-list-ol"></i> 10 Soal Pilihan Ganda</div>
+                <div class="info-chip"><i class="fas fa-clock"></i> 20 Detik per Soal</div>
+                <div class="info-chip"><i class="fas fa-graduation-cap"></i> Level SMK</div>
+            </div>
+
+            <button class="btn-start" onclick="startQuiz()" aria-label="Mulai Kuis">
+                Mulai Kuis <i class="fas fa-arrow-right" style="margin-left:8px"></i>
+            </button>
+
+            <div class="foot">
+                KPU Kabupaten Sumba Barat Daya<br>
+                Nusa Tenggara Timur
+            </div>
+        </div>
+
+        <!-- ===== QUIZ ===== -->
+        <div class="screen" id="quizScreen">
+            <div class="quiz-top">
+                <span class="q-progress" id="qProg">1 / 10</span>
+                <div class="q-timer" id="qTimer">
+                    <i class="fas fa-clock"></i>
+                    <span id="qTime">20</span>
+                </div>
+            </div>
+            <div class="bar-track">
+                <div class="bar-fill" id="barFill" style="width:10%"></div>
+            </div>
+            <div class="q-card">
+                <div class="q-num" id="qNum">Soal 01</div>
+                <div class="q-text" id="qText"></div>
+            </div>
+            <div class="opts" id="optsList"></div>
+            <div class="fb" id="fbCard">
+                <i id="fbIcon"></i>
+                <span id="fbText"></span>
+            </div>
+            <button class="btn-next" id="btnNext" onclick="nextQ()">
+                Selanjutnya <i class="fas fa-arrow-right"></i>
+            </button>
+        </div>
+
+        <!-- ===== RESULT ===== -->
+        <div class="screen" id="resultScreen">
+            <div class="kpu-badge" style="margin-bottom:20px">
+                <div class="kpu-emblem">KPU</div>
+                <div class="kpu-badge-text">
+                    <strong>KPU Kabupaten Sumba Barat Daya</strong>
+                    <span>Hasil Evaluasi PKL</span>
+                </div>
+            </div>
+
+            <div class="result-box">
+                <div class="score-ring-wrap">
+                    <svg width="160" height="160" viewBox="0 0 160 160">
+                        <circle class="ring-bg" cx="80" cy="80" r="68"></circle>
+                        <circle class="ring-fg" id="ringFg" cx="80" cy="80" r="68"
+                            stroke-dasharray="427.26" stroke-dashoffset="427.26"></circle>
+                    </svg>
+                    <span class="s-val" id="sVal">0</span>
+                    <span class="s-label">dari 10</span>
+                </div>
+                <div class="r-msg" id="rMsg"></div>
+                <div class="r-detail" id="rDetail"></div>
+                <div class="stats">
+                    <div class="stat">
+                        <div class="stat-n g" id="stOk">0</div>
+                        <div class="stat-d">Benar</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-n r" id="stNo">0</div>
+                        <div class="stat-d">Salah</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-n o" id="stTm">0s</div>
+                        <div class="stat-d">Waktu</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="rev-section">
+                <button class="rev-btn" id="revBtn" onclick="toggleRev()">
+                    <span><i class="fas fa-eye" style="margin-right:8px"></i>Lihat Pembahasan</span>
+                    <i class="fas fa-chevron-down" id="revChev"></i>
+                </button>
+                <div class="rev-list" id="revList"></div>
+            </div>
+
+            <button class="btn-start" style="margin-top:24px" onclick="restart()">
+                <i class="fas fa-redo" style="margin-right:8px"></i> Ulangi Kuis
+            </button>
+
+            <div class="foot">
+                KPU Kabupaten Sumba Barat Daya<br>
+                Nusa Tenggara Timur
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        // ===== DATA SOAL MICROSOFT WORD — Konteks KPU =====
+        const questions = [
+            {
+                q: "Di kantor KPU, siswi diminta membuat surat undangan rapat menggunakan Microsoft Word. Apa fungsi utama program tersebut?",
+                options: [
+                    "Mengolah angka dan grafik",
+                    "Mengolah dokumen dan teks",
+                    "Membuat presentasi slide",
+                    "Mengelola database pemilih"
+                ],
+                answer: 1,
+                explanation: "Microsoft Word adalah program pengolah dokumen (word processor) yang digunakan untuk membuat, mengedit, dan memformat teks seperti surat, laporan, dan dokumen resmi."
+            },
+            {
+                q: "Saat mengetik surat di KPU, siswi ingin membuat judul surat menjadi tebal. Shortcut keyboard yang digunakan adalah...",
+                options: [
+                    "Ctrl + I",
+                    "Ctrl + U",
+                    "Ctrl + B",
+                    "Ctrl + S"
+                ],
+                answer: 2,
+                explanation: "Ctrl + B (Bold) digunakan untuk membuat teks menjadi tebal. Ctrl + I untuk miring (Italic), Ctrl + U untuk garis bawah (Underline), dan Ctrl + S untuk menyimpan dokumen."
+            },
+            {
+                q: "KPU membutuhkan surat yang dikirim ke banyak pihak dengan isi yang sama namun nama penerima berbeda. Fitur yang paling tepat digunakan adalah...",
+                options: [
+                    "Page Break",
+                    "Mail Merge",
+                    "WordArt",
+                    "Drop Cap"
+                ],
+                answer: 1,
+                explanation: "Mail Merge adalah fitur untuk membuat surat massal — isi surat sama, tapi data penerima (nama, alamat) berbeda-beda. Sangat berguna di KPU untuk mengirim undangan atau surat ke banyak pihak sekaligus."
+            },
+            {
+                q: "Siswi ingin mengatur jarak tepi kertas surat resmi KPU agar sesuai format. Pengaturan ini dilakukan pada menu...",
+                options: [
+                    "Insert > Picture",
+                    "Home > Font",
+                    "Layout > Margins",
+                    "View > Ruler"
+                ],
+                answer: 2,
+                explanation: "Layout > Margins digunakan untuk mengatur batas tepi halaman (margin). Untuk surat resmi KPU biasanya margin kiri lebih lebar (4 cm) untuk tempat arsip."
+            },
+            {
+                q: "Untuk menambahkan nomor halaman di bagian bawah dokumen laporan KPU, langkah yang benar adalah...",
+                options: [
+                    "Insert > Page Number",
+                    "Home > Numbering",
+                    "Layout > Breaks",
+                    "Design > Page Border"
+                ],
+                answer: 0,
+                explanation: "Insert > Page Number digunakan untuk menambahkan nomor halaman secara otomatis di dokumen. Posisi bisa di atas (Top) atau di bawah (Bottom) halaman."
+            },
+            {
+                q: "Dokumen resmi KPU biasanya memiliki kop surat di bagian atas dan informasi di bagian bawah setiap halaman. Kedua area tersebut diatur melalui fitur...",
+                options: [
+                    "Footnote dan Endnote",
+                    "Header dan Footer",
+                    "Watermark dan Background",
+                    "Page Border dan Shading"
+                ],
+                answer: 1,
+                explanation: "Header adalah area di bagian atas halaman (untuk kop surat), sedangkan Footer di bagian bawah (untuk nomor halaman, alamat, dll). Keduanya diakses melalui tab Insert."
+            },
+            {
+                q: "Siswi ingin menyimpan dokumen undangan KPU dengan nama file baru tanpa mengubah file asli. Cara yang tepat adalah...",
+                options: [
+                    "Ctrl + S",
+                    "File > Save",
+                    "File > Save As",
+                    "File > Print"
+                ],
+                answer: 2,
+                explanation: "Save As digunakan untuk menyimpan dokumen dengan nama baru atau format berbeda, sehingga file asli tetap utuh. Sedangkan Save (Ctrl+S) menimpa file yang sudah ada."
+            },
+            {
+                q: "Dalam membuat tabel rekap data pemilih di Word, siswi harus memasukkan baris dan kolom. Cara yang benar untuk menyisipkan tabel adalah...",
+                options: [
+                    "Home > Font > Table",
+                    "Insert > Table",
+                    "Layout > Table",
+                    "View > Gridlines"
+                ],
+                answer: 1,
+                explanation: "Insert > Table digunakan untuk menyisipkan tabel ke dalam dokumen Word. Kita bisa memilih jumlah baris dan kolom yang dibutuhkan, atau menggambar tabel secara manual."
+            },
+            {
+                q: "Siswi mengetik dokumen laporan KPU dan ingin mengubah jarak antar baris menjadi 1,5. Pengaturan ini ada di menu...",
+                options: [
+                    "Home > Line & Paragraph Spacing",
+                    "Insert > Line Spacing",
+                    "Layout > Size",
+                    "View > Spacing"
+                ],
+                answer: 0,
+                explanation: "Home > Line & Paragraph Spacing digunakan untuk mengatur jarak antar baris (line spacing) dan jarak antar paragraf. Pilihan yang tersedia antara lain: 1.0, 1.15, 1.5, 2.0, dan lainnya."
+            },
+            {
+                q: "KPU membutuhkan dokumen yang dilindungi agar tidak bisa diubah oleh sembarang orang. Fitur yang digunakan adalah...",
+                options: [
+                    "File > Print",
+                    "File > Info > Protect Document",
+                    "Home > Clear Formatting",
+                    "Review > Spelling & Grammar"
+                ],
+                answer: 1,
+                explanation: "File > Info > Protect Document memungkinkan kita memberi perlindungan pada dokumen, seperti password untuk membuka, membatasi editing, atau menandai sebagai final. Penting untuk dokumen resmi KPU."
+            }
+        ];
+
+        // ===== STATE =====
+        let cur = 0;
+        let score = 0;
+        let tmr = null;
+        let tLeft = 20;
+        let tTotal = 0;
+        let answers = [];
+        let tStart = 0;
+
+        // ===== TOAST =====
+        function toast(msg, type) {
+            const box = document.getElementById('toastBox');
+            const t = document.createElement('div');
+            t.className = `toast toast-${type}`;
+            const ic = type === 'ok' ? 'fa-check-circle' : 'fa-times-circle';
+            t.innerHTML = `<i class="fas ${ic}"></i> ${msg}`;
+            box.appendChild(t);
+            setTimeout(() => t.remove(), 3000);
+        }
+
+        // ===== SCREEN =====
+        function showScr(id) {
+            document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+            document.getElementById(id).classList.add('active');
+        }
+
+        // ===== START =====
+        function startQuiz() {
+            cur = 0;
+            score = 0;
+            answers = [];
+            tStart = Date.now();
+            showScr('quizScreen');
+            loadQ();
+        }
+
+        // ===== LOAD Q =====
+        function loadQ() {
+            const q = questions[cur];
+            document.getElementById('qProg').textContent = `${cur + 1} / ${questions.length}`;
+            document.getElementById('barFill').style.width = `${((cur + 1) / questions.length) * 100}%`;
+            document.getElementById('qNum').textContent = `Soal ${String(cur + 1).padStart(2, '0')}`;
+            document.getElementById('qText').textContent = q.q;
+
+            const labels = ['A', 'B', 'C', 'D'];
+            const ol = document.getElementById('optsList');
+            ol.innerHTML = '';
+            q.options.forEach((o, i) => {
+                const btn = document.createElement('button');
+                btn.className = 'opt';
+                btn.innerHTML = `<span class="opt-label">${labels[i]}</span><span>${o}</span>`;
+                btn.onclick = () => pickAns(i);
+                btn.setAttribute('aria-label', `Pilihan ${labels[i]}: ${o}`);
+                ol.appendChild(btn);
+            });
+
+            const fb = document.getElementById('fbCard');
+            fb.classList.remove('show', 'fb-ok', 'fb-no');
+            document.getElementById('btnNext').classList.remove('show');
+
+            startTmr();
+        }
+
+        // ===== TIMER =====
+        function startTmr() {
+            tLeft = 20;
+            document.getElementById('qTime').textContent = tLeft;
+            document.getElementById('qTimer').classList.remove('danger');
+
+            clearInterval(tmr);
+            tmr = setInterval(() => {
+                tLeft--;
+                document.getElementById('qTime').textContent = tLeft;
+                if (tLeft <= 5) document.getElementById('qTimer').classList.add('danger');
+                if (tLeft <= 0) {
+                    clearInterval(tmr);
+                    timeOut();
+                }
+            }, 1000);
+        }
+
+        function timeOut() {
+            const q = questions[cur];
+            const btns = document.querySelectorAll('.opt');
+            btns.forEach((b, i) => {
+                b.classList.add('locked');
+                if (i === q.answer) b.classList.add('right');
+            });
+            answers.push({ sel: -1, cor: q.answer });
+            showFb(false, "Waktu habis! " + q.explanation);
+            toast("Waktu habis!", "err");
+            document.getElementById('btnNext').classList.add('show');
+        }
+
+        // ===== PICK ANSW =====
+        function pickAns(i) {
+            clearInterval(tmr);
+            const q = questions[cur];
+            const btns = document.querySelectorAll('.opt');
+            const ok = i === q.answer;
+
+            btns.forEach((b, j) => {
+                b.classList.add('locked');
+                if (j === q.answer) b.classList.add('right');
+                if (j === i && !ok) b.classList.add('wrong');
+            });
+
+            if (ok) {
+                score++;
+                toast("Jawaban benar!", "ok");
+            } else {
+                toast("Jawaban salah!", "err");
+            }
+
+            answers.push({ sel: i, cor: q.answer });
+            showFb(ok, q.explanation);
+            document.getElementById('btnNext').classList.add('show');
+        }
+
+        function showFb(ok, txt) {
+            const fb = document.getElementById('fbCard');
+            fb.classList.remove('fb-ok', 'fb-no');
+            fb.classList.add('show', ok ? 'fb-ok' : 'fb-no');
+            document.getElementById('fbIcon').className = ok ? 'fas fa-check-circle' : 'fas fa-times-circle';
+            document.getElementById('fbText').textContent = txt;
+        }
+
+        // ===== NEXT =====
+        function nextQ() {
+            cur++;
+            if (cur < questions.length) {
+                loadQ();
+            } else {
+                showResult();
+            }
+        }
+
+        // ===== RESULT =====
+        function showResult() {
+            tTotal = Math.round((Date.now() - tStart) / 1000);
+            showScr('resultScreen');
+
+            const sEl = document.getElementById('sVal');
+            const ring = document.getElementById('ringFg');
+            const circ = 2 * Math.PI * 68;
+            const pct = score / questions.length;
+
+            let col = 'var(--danger)';
+            if (pct >= 0.8) col = 'var(--success)';
+            else if (pct >= 0.6) col = 'var(--warning)';
+            else if (pct >= 0.4) col = 'var(--orange-light)';
+
+            ring.style.stroke = col;
+            ring.style.strokeDashoffset = circ;
+
+            setTimeout(() => {
+                ring.style.strokeDashoffset = circ - (circ * pct);
+            }, 200);
+
+            let c = 0;
+            const iv = setInterval(() => {
+                c++;
+                sEl.textContent = c;
+                if (c >= score) clearInterval(iv);
+            }, 100);
+
+            const msg = document.getElementById('rMsg');
+            const det = document.getElementById('rDetail');
+
+            if (pct >= 0.9) {
+                msg.textContent = "Luar Biasa!";
+                msg.style.color = 'var(--success)';
+                det.textContent = "Kamu sangat mahir mengoperasikan Microsoft Word. Siap membuat dokumen resmi di KPU!";
+            } else if (pct >= 0.7) {
+                msg.textContent = "Bagus Sekali!";
+                msg.style.color = 'var(--success)';
+                det.textContent = "Kemampuanmu sudah baik. Sedikit lagi sempurna untuk mengolah dokumen di KPU!";
+            } else if (pct >= 0.5) {
+                msg.textContent = "Cukup Baik";
+                msg.style.color = 'var(--warning)';
+                det.textContent = "Kamu sudah mengenal dasar Word. Ayo praktikkan lebih banyak di KPU!";
+            } else {
+                msg.textContent = "Perlu Belajar Lagi";
+                msg.style.color = 'var(--danger)';
+                det.textContent = "Jangan menyerah! Perbanyak latihan Microsoft Word agar lebih siap bekerja di KPU.";
+            }
+
+            document.getElementById('stOk').textContent = score;
+            document.getElementById('stNo').textContent = questions.length - score;
+            document.getElementById('stTm').textContent = tTotal + 's';
+
+            if (pct >= 0.7) confetti();
+            buildRev();
+        }
+
+        // ===== REVIEW =====
+        function buildRev() {
+            const list = document.getElementById('revList');
+            list.innerHTML = '';
+            list.classList.remove('show');
+            document.getElementById('revChev').style.transform = '';
+
+            const L = ['A', 'B', 'C', 'D'];
+
+            questions.forEach((q, i) => {
+                const a = answers[i];
+                const ok = a.sel === a.cor;
+
+                const d = document.createElement('div');
+                d.className = `rev-item ${ok ? 'ok' : 'no'}`;
+
+                let ah = '';
+                if (a.sel === -1) {
+                    ah = `<span class="w">Tidak dijawab</span> &mdash; Jawaban benar: <span class="c">${L[a.cor]}. ${q.options[a.cor]}</span>`;
+                } else if (ok) {
+                    ah = `<span class="c">${L[a.sel]}. ${q.options[a.sel]}</span>`;
+                } else {
+                    ah = `<span class="w">${L[a.sel]}. ${q.options[a.sel]}</span> &rarr; Jawaban benar: <span class="c">${L[a.cor]}. ${q.options[a.cor]}</span>`;
+                }
+
+                d.innerHTML = `
+                    <div class="rev-q">${i + 1}. ${q.q}</div>
+                    <div class="rev-a">${ah}</div>
+                    <div class="rev-exp">${q.explanation}</div>
+                `;
+                list.appendChild(d);
+            });
+        }
+
+        function toggleRev() {
+            const list = document.getElementById('revList');
+            const chev = document.getElementById('revChev');
+            list.classList.toggle('show');
+            chev.style.transform = list.classList.contains('show') ? 'rotate(180deg)' : '';
+        }
+
+        // ===== RESTART =====
+        function restart() {
+            showScr('startScreen');
+        }
+
+        // ===== CONFETTI =====
+        function confetti() {
+            const cv = document.getElementById('confettiCv');
+            const cx = cv.getContext('2d');
+            cv.width = window.innerWidth;
+            cv.height = window.innerHeight;
+
+            const ps = [];
+            const cs = ['#4a9eff', '#38b27a', '#f5a623', '#e63946', '#2b6cb0', '#ffffff'];
+
+            for (let i = 0; i < 130; i++) {
+                ps.push({
+                    x: Math.random() * cv.width,
+                    y: Math.random() * cv.height - cv.height,
+                    w: Math.random() * 10 + 4,
+                    h: Math.random() * 6 + 3,
+                    c: cs[Math.floor(Math.random() * cs.length)],
+                    vy: Math.random() * 3 + 2,
+                    vx: (Math.random() - 0.5) * 2.5,
+                    r: Math.random() * 360,
+                    rs: (Math.random() - 0.5) * 10
+                });
+            }
+
+            let f = 0;
+            function draw() {
+                cx.clearRect(0, 0, cv.width, cv.height);
+                f++;
+                ps.forEach(p => {
+                    p.y += p.vy;
+                    p.x += p.vx;
+                    p.r += p.rs;
+                    cx.save();
+                    cx.translate(p.x, p.y);
+                    cx.rotate(p.r * Math.PI / 180);
+                    cx.fillStyle = p.c;
+                    cx.globalAlpha = Math.max(0, 1 - f / 180);
+                    cx.fillRect(-p.w / 2, -p.h / 2, p.w, p.h);
+                    cx.restore();
+                });
+                if (f < 200) requestAnimationFrame(draw);
+                else cx.clearRect(0, 0, cv.width, cv.height);
+            }
+            draw();
+        }
+
+        window.addEventListener('resize', () => {
+            const cv = document.getElementById('confettiCv');
+            cv.width = window.innerWidth;
+            cv.height = window.innerHeight;
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,1359 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kuis Microsoft Excel - KPU Kab. Sumba Barat Daya</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <style>
+        :root {
+            --bg: #0b0f0d;
+            --bg2: #111916;
+            --card: #152019;
+            --card-hover: #1c2b23;
+            --border: #264035;
+            --fg: #eaf5ef;
+            --muted: #7fa896;
+            --accent: #1d8348;
+            --accent-light: #2ecc71;
+            --accent-glow: rgba(46,204,113,0.12);
+            --lime: #a8e06c;
+            --teal: #1abc9c;
+            --red: #e74c3c;
+            --danger: #ff4d6a;
+            --warning: #f39c12;
+            --success: #2ecc71;
+            --radius: 14px;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Outfit', sans-serif;
+            background: var(--bg);
+            color: var(--fg);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* ===== BACKGROUND ===== */
+        .bg-base {
+            position: fixed;
+            inset: 0;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        .bg-grad {
+            background:
+                radial-gradient(ellipse 550px 450px at 10% 15%, rgba(29,131,72,0.1) 0%, transparent 70%),
+                radial-gradient(ellipse 450px 400px at 90% 85%, rgba(168,224,108,0.06) 0%, transparent 70%),
+                radial-gradient(ellipse 500px 300px at 50% 50%, rgba(26,188,156,0.04) 0%, transparent 70%);
+        }
+
+        .bg-grid-pattern {
+            background-image:
+                linear-gradient(rgba(46,204,113,0.025) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(46,204,113,0.025) 1px, transparent 1px);
+            background-size: 28px 28px;
+        }
+
+        /* ===== SPREADSHEET PATTERN ===== */
+        .bg-sheet {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) rotate(-8deg) scale(1.8);
+            z-index: 0;
+            pointer-events: none;
+            opacity: 0.03;
+            width: 600px;
+        }
+
+        .bg-sheet table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .bg-sheet td {
+            border: 1px solid var(--accent-light);
+            height: 28px;
+            min-width: 50px;
+        }
+
+        /* ===== GLOW ORBS ===== */
+        .orb {
+            position: fixed;
+            border-radius: 50%;
+            filter: blur(100px);
+            z-index: 0;
+            pointer-events: none;
+            animation: orbFloat 12s ease-in-out infinite;
+        }
+
+        .orb-1 {
+            width: 300px; height: 300px;
+            top: -80px; left: -60px;
+            background: var(--accent);
+            opacity: 0.06;
+        }
+
+        .orb-2 {
+            width: 250px; height: 250px;
+            bottom: -60px; right: -40px;
+            background: var(--lime);
+            opacity: 0.05;
+            animation-delay: 4s;
+        }
+
+        .orb-3 {
+            width: 200px; height: 200px;
+            top: 40%; left: 60%;
+            background: var(--teal);
+            opacity: 0.04;
+            animation-delay: 8s;
+        }
+
+        @keyframes orbFloat {
+            0%, 100% { transform: translate(0, 0); }
+            50% { transform: translate(20px, -30px); }
+        }
+
+        /* ===== MAIN CONTAINER ===== */
+        .app-wrap {
+            position: relative;
+            z-index: 1;
+            max-width: 740px;
+            margin: 0 auto;
+            padding: 24px 16px;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* ===== SCREENS ===== */
+        .scr {
+            display: none;
+            width: 100%;
+            animation: enterScr 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .scr.active {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        @keyframes enterScr {
+            from { opacity: 0; transform: translateY(28px) scale(0.97); }
+            to { opacity: 1; transform: translateY(0) scale(1); }
+        }
+
+        /* ===== KPU BADGE ===== */
+        .kpu-badge {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 10px 18px;
+            margin-bottom: 24px;
+            font-size: 12px;
+            color: var(--muted);
+            letter-spacing: 0.3px;
+        }
+
+        .kpu-emblem {
+            width: 34px;
+            height: 34px;
+            background: linear-gradient(135deg, var(--red), var(--accent));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 9px;
+            color: #fff;
+            flex-shrink: 0;
+            border: 2px solid rgba(231,76,60,0.25);
+        }
+
+        .kpu-badge strong {
+            color: var(--fg);
+            font-size: 13px;
+            display: block;
+        }
+
+        /* ===== HERO ===== */
+        .hero-visual {
+            position: relative;
+            margin-bottom: 24px;
+        }
+
+        .hero-icon {
+            width: 100px;
+            height: 100px;
+            background: linear-gradient(135deg, var(--accent), var(--accent-light));
+            border-radius: 26px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 46px;
+            color: #fff;
+            box-shadow: 0 16px 48px rgba(46,204,113,0.18);
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero-dots {
+            position: absolute;
+            top: -10px;
+            right: -18px;
+            display: grid;
+            grid-template-columns: repeat(3, 6px);
+            gap: 5px;
+            z-index: 0;
+        }
+
+        .hero-dots span {
+            width: 6px;
+            height: 6px;
+            border-radius: 2px;
+            background: var(--accent-light);
+            opacity: 0.3;
+            animation: dotPulse 2s ease-in-out infinite;
+        }
+
+        .hero-dots span:nth-child(2) { animation-delay: 0.2s; }
+        .hero-dots span:nth-child(3) { animation-delay: 0.4s; }
+        .hero-dots span:nth-child(4) { animation-delay: 0.6s; }
+        .hero-dots span:nth-child(5) { animation-delay: 0.8s; }
+        .hero-dots span:nth-child(6) { animation-delay: 1s; }
+        .hero-dots span:nth-child(7) { animation-delay: 1.2s; }
+        .hero-dots span:nth-child(8) { animation-delay: 1.4s; }
+        .hero-dots span:nth-child(9) { animation-delay: 1.6s; }
+
+        @keyframes dotPulse {
+            0%, 100% { opacity: 0.2; transform: scale(1); }
+            50% { opacity: 0.6; transform: scale(1.3); }
+        }
+
+        .hero-title {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 26px;
+            font-weight: 700;
+            text-align: center;
+            margin-bottom: 6px;
+            line-height: 1.3;
+        }
+
+        .hero-title .hl {
+            background: linear-gradient(135deg, var(--accent-light), var(--lime));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero-sub {
+            color: var(--muted);
+            font-size: 14px;
+            text-align: center;
+            margin-bottom: 32px;
+            line-height: 1.7;
+        }
+
+        .chips {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 32px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .chip {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 10px 16px;
+            font-size: 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--muted);
+        }
+
+        .chip i { color: var(--accent-light); }
+
+        .btn-go {
+            background: linear-gradient(135deg, var(--accent), var(--accent-light));
+            color: #fff;
+            border: none;
+            padding: 16px 52px;
+            border-radius: 14px;
+            font-family: 'Outfit', sans-serif;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            letter-spacing: 0.3px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-go::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            background: rgba(255,255,255,0.1);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            transition: width 0.5s ease, height 0.5s ease;
+        }
+
+        .btn-go:hover::before {
+            width: 300px;
+            height: 300px;
+        }
+
+        .btn-go:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 36px rgba(46,204,113,0.25);
+        }
+
+        .btn-go:active { transform: translateY(0); }
+
+        /* ===== QUIZ SCREEN ===== */
+        .q-top {
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 14px;
+        }
+
+        .q-prog {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 14px;
+            color: var(--accent-light);
+            font-weight: 700;
+        }
+
+        .q-timer {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 14px;
+            color: var(--muted);
+            background: var(--card);
+            padding: 6px 14px;
+            border-radius: 8px;
+            border: 1px solid var(--border);
+            transition: all 0.3s ease;
+        }
+
+        .q-timer.alert {
+            color: var(--danger);
+            border-color: rgba(255,77,106,0.4);
+            background: rgba(255,77,106,0.06);
+            animation: blinkA 0.5s ease-in-out infinite alternate;
+        }
+
+        @keyframes blinkA { to { opacity: 0.6; } }
+
+        .pbar-track {
+            width: 100%;
+            height: 5px;
+            background: var(--bg2);
+            border-radius: 10px;
+            margin-bottom: 24px;
+            overflow: hidden;
+        }
+
+        .pbar-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--accent), var(--accent-light));
+            border-radius: 10px;
+            transition: width 0.5s ease;
+        }
+
+        .q-card {
+            width: 100%;
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 28px 24px;
+            margin-bottom: 18px;
+            position: relative;
+        }
+
+        .q-card::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 24px;
+            right: 24px;
+            height: 2px;
+            background: linear-gradient(90deg, var(--accent-light), var(--lime), transparent);
+            border-radius: 2px;
+        }
+
+        .q-num {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 11px;
+            color: var(--accent-light);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 12px;
+        }
+
+        .q-text {
+            font-size: 17px;
+            font-weight: 600;
+            line-height: 1.65;
+        }
+
+        .opts {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-bottom: 18px;
+        }
+
+        .opt {
+            width: 100%;
+            background: var(--card);
+            border: 2px solid var(--border);
+            border-radius: 12px;
+            padding: 14px 18px;
+            font-family: 'Outfit', sans-serif;
+            font-size: 14px;
+            color: var(--fg);
+            cursor: pointer;
+            text-align: left;
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            transition: all 0.25s ease;
+            line-height: 1.5;
+        }
+
+        .opt:hover:not(.off) {
+            border-color: var(--accent-light);
+            background: var(--card-hover);
+            transform: translateX(6px);
+        }
+
+        .opt-lbl {
+            width: 30px;
+            height: 30px;
+            border-radius: 8px;
+            background: var(--bg2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'JetBrains Mono', monospace;
+            font-weight: 700;
+            font-size: 12px;
+            color: var(--muted);
+            flex-shrink: 0;
+            transition: all 0.25s ease;
+            margin-top: 1px;
+        }
+
+        .opt:hover:not(.off) .opt-lbl {
+            background: var(--accent-light);
+            color: var(--bg);
+        }
+
+        .opt.yes {
+            border-color: var(--success);
+            background: rgba(46,204,113,0.06);
+        }
+
+        .opt.yes .opt-lbl {
+            background: var(--success);
+            color: var(--bg);
+        }
+
+        .opt.nah {
+            border-color: var(--danger);
+            background: rgba(255,77,106,0.06);
+        }
+
+        .opt.nah .opt-lbl {
+            background: var(--danger);
+            color: #fff;
+        }
+
+        .opt.off { cursor: default; opacity: 0.5; }
+        .opt.yes.off, .opt.nah.off { opacity: 1; }
+
+        /* ===== FEEDBACK ===== */
+        .fb {
+            width: 100%;
+            border-radius: 12px;
+            padding: 16px 20px;
+            margin-bottom: 16px;
+            display: none;
+            align-items: flex-start;
+            gap: 12px;
+            font-size: 13px;
+            line-height: 1.6;
+            animation: enterScr 0.3s ease;
+        }
+
+        .fb.show { display: flex; }
+
+        .fb.fb-y {
+            background: rgba(46,204,113,0.08);
+            border: 1px solid rgba(46,204,113,0.25);
+            color: var(--success);
+        }
+
+        .fb.fb-n {
+            background: rgba(255,77,106,0.08);
+            border: 1px solid rgba(255,77,106,0.25);
+            color: var(--danger);
+        }
+
+        .fb i { font-size: 18px; margin-top: 2px; flex-shrink: 0; }
+
+        .btn-nxt {
+            background: var(--card);
+            border: 2px solid var(--border);
+            color: var(--fg);
+            padding: 14px 36px;
+            border-radius: 12px;
+            font-family: 'Outfit', sans-serif;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: none;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-nxt.show { display: flex; }
+
+        .btn-nxt:hover {
+            border-color: var(--accent-light);
+            background: var(--card-hover);
+            transform: translateY(-2px);
+        }
+
+        /* ===== RESULT ===== */
+        .res-box {
+            width: 100%;
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 36px 28px;
+            text-align: center;
+            margin-bottom: 24px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .res-box::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: linear-gradient(90deg, var(--accent), var(--accent-light), var(--lime));
+        }
+
+        .ring-wrap {
+            width: 160px;
+            height: 160px;
+            margin: 0 auto 24px;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+        }
+
+        .ring-wrap svg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            transform: rotate(-90deg);
+        }
+
+        .r-bg { fill: none; stroke: var(--bg2); stroke-width: 8; }
+        .r-fg { fill: none; stroke-width: 8; stroke-linecap: round; transition: stroke-dashoffset 1.5s ease; }
+
+        .s-val {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 44px;
+            font-weight: 700;
+            z-index: 1;
+        }
+
+        .s-lbl {
+            font-size: 13px;
+            color: var(--muted);
+            z-index: 1;
+        }
+
+        .r-msg {
+            font-size: 22px;
+            font-weight: 800;
+            margin-bottom: 8px;
+        }
+
+        .r-det {
+            color: var(--muted);
+            font-size: 14px;
+            margin-bottom: 24px;
+            line-height: 1.6;
+        }
+
+        .sts {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+        }
+
+        .st { text-align: center; }
+
+        .st-n {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 24px;
+            font-weight: 700;
+        }
+
+        .st-n.g { color: var(--success); }
+        .st-n.r { color: var(--danger); }
+        .st-n.l { color: var(--lime); }
+
+        .st-d {
+            font-size: 12px;
+            color: var(--muted);
+            margin-top: 4px;
+        }
+
+        /* ===== REVIEW ===== */
+        .rv-sec { width: 100%; margin-top: 8px; }
+
+        .rv-btn {
+            width: 100%;
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 14px 20px;
+            font-family: 'Outfit', sans-serif;
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--muted);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            transition: all 0.25s ease;
+        }
+
+        .rv-btn:hover {
+            border-color: var(--accent-light);
+            color: var(--fg);
+        }
+
+        .rv-list {
+            display: none;
+            flex-direction: column;
+            gap: 10px;
+            margin-top: 10px;
+            animation: enterScr 0.3s ease;
+        }
+
+        .rv-list.show { display: flex; }
+
+        .rv-item {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 16px 20px;
+            text-align: left;
+        }
+
+        .rv-item.ok { border-left: 4px solid var(--success); }
+        .rv-item.no { border-left: 4px solid var(--danger); }
+
+        .rv-q {
+            font-size: 13px;
+            font-weight: 600;
+            margin-bottom: 8px;
+            line-height: 1.5;
+        }
+
+        .rv-a {
+            font-size: 12px;
+            color: var(--muted);
+            line-height: 1.5;
+        }
+
+        .rv-a .c { color: var(--success); font-weight: 600; }
+        .rv-a .w { color: var(--danger); text-decoration: line-through; opacity: 0.7; font-weight: 600; }
+
+        .rv-exp {
+            font-size: 12px;
+            color: var(--muted);
+            line-height: 1.5;
+            font-style: italic;
+            opacity: 0.7;
+            margin-top: 4px;
+        }
+
+        /* ===== TOAST ===== */
+        .toast-wrap {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 999;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .toast {
+            padding: 12px 20px;
+            border-radius: 10px;
+            font-size: 13px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            animation: tIn 0.3s ease, tOut 0.3s ease 2.5s forwards;
+        }
+
+        .toast-ok {
+            background: rgba(46,204,113,0.12);
+            border: 1px solid rgba(46,204,113,0.3);
+            color: var(--success);
+        }
+
+        .toast-no {
+            background: rgba(255,77,106,0.12);
+            border: 1px solid rgba(255,77,106,0.3);
+            color: var(--danger);
+        }
+
+        @keyframes tIn {
+            from { opacity: 0; transform: translateX(40px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        @keyframes tOut {
+            from { opacity: 1; }
+            to { opacity: 0; transform: translateY(-10px); }
+        }
+
+        /* ===== CONFETTI ===== */
+        .conf-cv {
+            position: fixed;
+            inset: 0;
+            z-index: 50;
+            pointer-events: none;
+        }
+
+        /* ===== FOOTER ===== */
+        .foot {
+            margin-top: 28px;
+            font-size: 11px;
+            color: var(--muted);
+            opacity: 0.45;
+            text-align: center;
+            line-height: 1.5;
+        }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 600px) {
+            .hero-title { font-size: 20px; }
+            .q-text { font-size: 15px; }
+            .q-card { padding: 22px 16px; }
+            .opt { padding: 12px 14px; font-size: 13px; }
+            .sts { gap: 18px; }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="bg-base bg-grad"></div>
+    <div class="bg-base bg-grid-pattern"></div>
+
+    <div class="bg-sheet">
+        <table>
+            <tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+            <tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+            <tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+            <tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+            <tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+            <tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+            <tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+            <tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+        </table>
+    </div>
+
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+    <div class="orb orb-3"></div>
+
+    <div class="toast-wrap" id="toastWrap"></div>
+    <canvas class="conf-cv" id="confCv"></canvas>
+
+    <div class="app-wrap">
+
+        <!-- ===== START ===== -->
+        <div class="scr active" id="startScr">
+            <div class="kpu-badge">
+                <div class="kpu-emblem">KPU</div>
+                <div>
+                    <strong>KPU Kabupaten Sumba Barat Daya</strong>
+                    <span>Program Praktik Kerja Lapangan</span>
+                </div>
+            </div>
+
+            <div class="hero-visual">
+                <div class="hero-dots">
+                    <span></span><span></span><span></span>
+                    <span></span><span></span><span></span>
+                    <span></span><span></span><span></span>
+                </div>
+                <div class="hero-icon">
+                    <i class="fas fa-table"></i>
+                </div>
+            </div>
+
+            <h1 class="hero-title">Kuis <span class="hl">Microsoft Excel</span></h1>
+            <p class="hero-sub">
+                Evaluasi kemampuan pengolah angka dan spreadsheet<br>
+                untuk siswi PKL di KPU Kab. Sumba Barat Daya.
+            </p>
+
+            <div class="chips">
+                <div class="chip"><i class="fas fa-list-ol"></i> 10 Soal Pilihan Ganda</div>
+                <div class="chip"><i class="fas fa-clock"></i> 20 Detik per Soal</div>
+                <div class="chip"><i class="fas fa-graduation-cap"></i> Level SMK</div>
+            </div>
+
+            <button class="btn-go" onclick="startQuiz()" aria-label="Mulai Kuis">
+                Mulai Kuis <i class="fas fa-arrow-right" style="margin-left:8px"></i>
+            </button>
+
+            <div class="foot">
+                KPU Kabupaten Sumba Barat Daya<br>
+                Nusa Tenggara Timur
+            </div>
+        </div>
+
+        <!-- ===== QUIZ ===== -->
+        <div class="scr" id="quizScr">
+            <div class="q-top">
+                <span class="q-prog" id="qProg">1 / 10</span>
+                <div class="q-timer" id="qTimer">
+                    <i class="fas fa-clock"></i>
+                    <span id="qTime">20</span>
+                </div>
+            </div>
+            <div class="pbar-track">
+                <div class="pbar-fill" id="pFill" style="width:10%"></div>
+            </div>
+            <div class="q-card">
+                <div class="q-num" id="qNum">Soal 01</div>
+                <div class="q-text" id="qText"></div>
+            </div>
+            <div class="opts" id="optsList"></div>
+            <div class="fb" id="fbCard">
+                <i id="fbIcon"></i>
+                <span id="fbText"></span>
+            </div>
+            <button class="btn-nxt" id="btnNxt" onclick="nextQ()">
+                Selanjutnya <i class="fas fa-arrow-right"></i>
+            </button>
+        </div>
+
+        <!-- ===== RESULT ===== -->
+        <div class="scr" id="resultScr">
+            <div class="kpu-badge" style="margin-bottom:20px">
+                <div class="kpu-emblem">KPU</div>
+                <div>
+                    <strong>KPU Kabupaten Sumba Barat Daya</strong>
+                    <span>Hasil Evaluasi PKL</span>
+                </div>
+            </div>
+
+            <div class="res-box">
+                <div class="ring-wrap">
+                    <svg width="160" height="160" viewBox="0 0 160 160">
+                        <circle class="r-bg" cx="80" cy="80" r="68"></circle>
+                        <circle class="r-fg" id="rFg" cx="80" cy="80" r="68"
+                            stroke-dasharray="427.26" stroke-dashoffset="427.26"></circle>
+                    </svg>
+                    <span class="s-val" id="sVal">0</span>
+                    <span class="s-lbl">dari 10</span>
+                </div>
+                <div class="r-msg" id="rMsg"></div>
+                <div class="r-det" id="rDet"></div>
+                <div class="sts">
+                    <div class="st">
+                        <div class="st-n g" id="stOk">0</div>
+                        <div class="st-d">Benar</div>
+                    </div>
+                    <div class="st">
+                        <div class="st-n r" id="stNo">0</div>
+                        <div class="st-d">Salah</div>
+                    </div>
+                    <div class="st">
+                        <div class="st-n l" id="stTm">0s</div>
+                        <div class="st-d">Waktu</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="rv-sec">
+                <button class="rv-btn" id="rvBtn" onclick="toggleRv()">
+                    <span><i class="fas fa-eye" style="margin-right:8px"></i>Lihat Pembahasan</span>
+                    <i class="fas fa-chevron-down" id="rvChev"></i>
+                </button>
+                <div class="rv-list" id="rvList"></div>
+            </div>
+
+            <button class="btn-go" style="margin-top:24px" onclick="restart()">
+                <i class="fas fa-redo" style="margin-right:8px"></i> Ulangi Kuis
+            </button>
+
+            <div class="foot">
+                KPU Kabupaten Sumba Barat Daya<br>
+                Nusa Tenggara Timur
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        // ===== DATA SOAL MICROSOFT EXCEL — Konteks KPU =====
+        const questions = [
+            {
+                q: "Di KPU Sumba Barat Daya, siswi diminta mengolah data jumlah pemilih menggunakan spreadsheet. Program yang tepat digunakan adalah...",
+                options: [
+                    "Microsoft Word",
+                    "Microsoft PowerPoint",
+                    "Microsoft Excel",
+                    "Microsoft Access"
+                ],
+                answer: 2,
+                explanation: "Microsoft Excel adalah program pengolah angka (spreadsheet) yang digunakan untuk mengolah data, menghitung, membuat grafik, dan menganalisis informasi — sangat cocok untuk mengolah data pemilih di KPU."
+            },
+            {
+                q: "Perpotongan antara baris dan kolom di Microsoft Excel yang menjadi tempat memasukkan data disebut...",
+                options: [
+                    "Worksheet",
+                    "Cell",
+                    "Range",
+                    "Workbook"
+                ],
+                answer: 1,
+                explanation: "Cell (sel) adalah perpotongan antara baris (angka) dan kolom (huruf) di Excel. Contoh: A1, B5, C10. Setiap cell adalah tempat kita memasukkan data atau rumus."
+            },
+            {
+                q: "Siswi ingin menjumlahkan data jumlah pemilih dari sel B2 sampai B10. Rumus yang benar adalah...",
+                options: [
+                    "=SUM(B2:B10)",
+                    "=ADD(B2:B10)",
+                    "=TOTAL(B2:B10)",
+                    "=PLUS(B2:B10)"
+                ],
+                answer: 0,
+                explanation: "Rumus =SUM(B2:B10) digunakan untuk menjumlahkan nilai dari sel B2 sampai B10. SUM adalah fungsi penjumlahan yang paling sering digunakan di Excel."
+            },
+            {
+                q: "Untuk menghitung rata-rata jumlah pemilih per TPS dari data di sel C2 sampai C20, rumus yang digunakan adalah...",
+                options: [
+                    "=AVERAGE(C2:C20)",
+                    "=MEAN(C2:C20)",
+                    "=MIDDLE(C2:C20)",
+                    "=MEDIAN(C2:C20)"
+                ],
+                answer: 0,
+                explanation: "AVERAGE digunakan untuk menghitung rata-rata. =AVERAGE(C2:C20) akan menjumlahkan semua nilai dari C2 sampai C20 lalu membaginya dengan jumlah datanya."
+            },
+            {
+                q: "KPU ingin mengetahui berapa banyak TPS yang memiliki jumlah pemilih lebih dari 200. Fungsi yang tepat digunakan adalah...",
+                options: [
+                    "=SUMIF",
+                    "=COUNTIF",
+                    "=VLOOKUP",
+                    "=IF"
+                ],
+                answer: 1,
+                explanation: "COUNTIF digunakan untuk menghitung jumlah sel yang memenuhi kriteria tertentu. Contoh: =COUNTIF(D2:D100,\">200\") akan menghitung berapa banyak sel di range D2:D100 yang bernilai lebih dari 200."
+            },
+            {
+                q: "Siswi ingin menampilkan teks 'LULUS' jika nilai KPU di atas 70 dan 'TIDAK' jika di bawah 70. Rumus yang digunakan adalah...",
+                options: [
+                    "=VLOOKUP(E2,70,\"LULUS\",\"TIDAK\")",
+                    "=IF(E2>70,\"LULUS\",\"TIDAK\")",
+                    "=COUNTIF(E2>70,\"LULUS\",\"TIDAK\")",
+                    "=SUMIF(E2,70,\"LULUS\",\"TIDAK\")"
+                ],
+                answer: 1,
+                explanation: "Fungsi IF digunakan untuk pengujian logika. =IF(E2>70,\"LULUS\",\"TIDAK\") artinya: jika nilai di E2 lebih dari 70, tampilkan 'LULUS'; jika tidak, tampilkan 'TIDAK'."
+            },
+            {
+                q: "Siswi ingin mencari nama kecamatan berdasarkan kode kecamatan pada tabel data KPU. Fungsi yang paling tepat adalah...",
+                options: [
+                    "=SUMIF",
+                    "=VLOOKUP",
+                    "=AVERAGE",
+                    "=COUNT"
+                ],
+                answer: 1,
+                explanation: "VLOOKUP digunakan untuk mencari data secara vertikal berdasarkan nilai kunci. Contoh: =VLOOKUP(A2,TabelKecamatan,2,FALSE) akan mencari kode kecamatan di A2 dan mengembalikan nama kecamatan dari kolom ke-2."
+            },
+            {
+                q: "Saat menyalin rumus =A1*B1 ke baris di bawahnya, Excel otomatis mengubahnya menjadi =A2*B2. Hal ini terjadi karena Excel menggunakan...",
+                options: [
+                    "Absolute reference",
+                    "Relative reference",
+                    "Mixed reference",
+                    "Named range"
+                ],
+                answer: 1,
+                explanation: "Relative reference (referensi relatif) adalah alamat sel yang akan berubah secara otomatis saat rumus disalin ke sel lain. A1→A2→A3. Jika ingin tetap, gunakan absolute reference dengan tanda $ seperti $A$1."
+            },
+            {
+                q: "Untuk membuat grafik batang (bar chart) dari data jumlah pemilih per kecamatan, langkah yang benar adalah...",
+                options: [
+                    "Insert > Chart > pilih tipe grafik",
+                    "Home > Chart > pilih tipe grafik",
+                    "Layout > Chart > pilih tipe grafik",
+                    "View > Chart > pilih tipe grafik"
+                ],
+                answer: 0,
+                explanation: "Insert > Chart digunakan untuk menyisipkan grafik ke lembar kerja Excel. Pilih data terlebih dahulu, lalu klik Insert > Chart dan pilih tipe grafik yang sesuai (bar, line, pie, dll)."
+            },
+            {
+                q: "Agar judul tabel data KPU berada tepat di tengah kolom, siswi menggunakan fitur...",
+                options: [
+                    "Text Wrap",
+                    "Merge & Center",
+                    "Conditional Formatting",
+                    "Data Validation"
+                ],
+                answer: 1,
+                explanation: "Merge & Center digunakan untuk menggabungkan beberapa sel menjadi satu dan meletakkan teks di tengah. Fitur ini sangat berguna untuk membuat judul tabel yang rapi di atas data KPU."
+            }
+        ];
+
+        // ===== STATE =====
+        let cur = 0;
+        let score = 0;
+        let tmr = null;
+        let tLeft = 20;
+        let tTotal = 0;
+        let answers = [];
+        let tStart = 0;
+
+        // ===== TOAST =====
+        function toast(msg, type) {
+            const w = document.getElementById('toastWrap');
+            const t = document.createElement('div');
+            t.className = `toast toast-${type}`;
+            const ic = type === 'ok' ? 'fa-check-circle' : 'fa-times-circle';
+            t.innerHTML = `<i class="fas ${ic}"></i> ${msg}`;
+            w.appendChild(t);
+            setTimeout(() => t.remove(), 3000);
+        }
+
+        // ===== SCREEN =====
+        function showScr(id) {
+            document.querySelectorAll('.scr').forEach(s => s.classList.remove('active'));
+            document.getElementById(id).classList.add('active');
+        }
+
+        // ===== START =====
+        function startQuiz() {
+            cur = 0;
+            score = 0;
+            answers = [];
+            tStart = Date.now();
+            showScr('quizScr');
+            loadQ();
+        }
+
+        // ===== LOAD Q =====
+        function loadQ() {
+            const q = questions[cur];
+            document.getElementById('qProg').textContent = `${cur + 1} / ${questions.length}`;
+            document.getElementById('pFill').style.width = `${((cur + 1) / questions.length) * 100}%`;
+            document.getElementById('qNum').textContent = `Soal ${String(cur + 1).padStart(2, '0')}`;
+            document.getElementById('qText').textContent = q.q;
+
+            const L = ['A', 'B', 'C', 'D'];
+            const ol = document.getElementById('optsList');
+            ol.innerHTML = '';
+            q.options.forEach((o, i) => {
+                const btn = document.createElement('button');
+                btn.className = 'opt';
+                btn.innerHTML = `<span class="opt-lbl">${L[i]}</span><span>${o}</span>`;
+                btn.onclick = () => pick(i);
+                btn.setAttribute('aria-label', `Pilihan ${L[i]}: ${o}`);
+                ol.appendChild(btn);
+            });
+
+            const fb = document.getElementById('fbCard');
+            fb.classList.remove('show', 'fb-y', 'fb-n');
+            document.getElementById('btnNxt').classList.remove('show');
+
+            startTmr();
+        }
+
+        // ===== TIMER =====
+        function startTmr() {
+            tLeft = 20;
+            document.getElementById('qTime').textContent = tLeft;
+            document.getElementById('qTimer').classList.remove('alert');
+
+            clearInterval(tmr);
+            tmr = setInterval(() => {
+                tLeft--;
+                document.getElementById('qTime').textContent = tLeft;
+                if (tLeft <= 5) document.getElementById('qTimer').classList.add('alert');
+                if (tLeft <= 0) {
+                    clearInterval(tmr);
+                    timeout();
+                }
+            }, 1000);
+        }
+
+        function timeout() {
+            const q = questions[cur];
+            const btns = document.querySelectorAll('.opt');
+            btns.forEach((b, i) => {
+                b.classList.add('off');
+                if (i === q.answer) b.classList.add('yes');
+            });
+            answers.push({ sel: -1, cor: q.answer });
+            showFb(false, "Waktu habis! " + q.explanation);
+            toast("Waktu habis!", "no");
+            document.getElementById('btnNxt').classList.add('show');
+        }
+
+        // ===== PICK =====
+        function pick(i) {
+            clearInterval(tmr);
+            const q = questions[cur];
+            const btns = document.querySelectorAll('.opt');
+            const ok = i === q.answer;
+
+            btns.forEach((b, j) => {
+                b.classList.add('off');
+                if (j === q.answer) b.classList.add('yes');
+                if (j === i && !ok) b.classList.add('nah');
+            });
+
+            if (ok) {
+                score++;
+                toast("Jawaban benar!", "ok");
+            } else {
+                toast("Jawaban salah!", "no");
+            }
+
+            answers.push({ sel: i, cor: q.answer });
+            showFb(ok, q.explanation);
+            document.getElementById('btnNxt').classList.add('show');
+        }
+
+        function showFb(ok, txt) {
+            const fb = document.getElementById('fbCard');
+            fb.classList.remove('fb-y', 'fb-n');
+            fb.classList.add('show', ok ? 'fb-y' : 'fb-n');
+            document.getElementById('fbIcon').className = ok ? 'fas fa-check-circle' : 'fas fa-times-circle';
+            document.getElementById('fbText').textContent = txt;
+        }
+
+        // ===== NEXT =====
+        function nextQ() {
+            cur++;
+            if (cur < questions.length) loadQ();
+            else showResult();
+        }
+
+        // ===== RESULT =====
+        function showResult() {
+            tTotal = Math.round((Date.now() - tStart) / 1000);
+            showScr('resultScr');
+
+            const sEl = document.getElementById('sVal');
+            const ring = document.getElementById('rFg');
+            const circ = 2 * Math.PI * 68;
+            const pct = score / questions.length;
+
+            let col = 'var(--danger)';
+            if (pct >= 0.8) col = 'var(--success)';
+            else if (pct >= 0.6) col = 'var(--warning)';
+            else if (pct >= 0.4) col = 'var(--lime)';
+
+            ring.style.stroke = col;
+            ring.style.strokeDashoffset = circ;
+
+            setTimeout(() => {
+                ring.style.strokeDashoffset = circ - (circ * pct);
+            }, 200);
+
+            let c = 0;
+            const iv = setInterval(() => {
+                c++;
+                sEl.textContent = c;
+                if (c >= score) clearInterval(iv);
+            }, 100);
+
+            const msg = document.getElementById('rMsg');
+            const det = document.getElementById('rDet');
+
+            if (pct >= 0.9) {
+                msg.textContent = "Luar Biasa!";
+                msg.style.color = 'var(--success)';
+                det.textContent = "Kamu sangat mahir Microsoft Excel! Siap mengolah data pemilih di KPU Sumba Barat Daya!";
+            } else if (pct >= 0.7) {
+                msg.textContent = "Bagus Sekali!";
+                msg.style.color = 'var(--success)';
+                det.textContent = "Kemampuan Excel-mu sudah baik. Sedikit lagi sempurna untuk mengolah data di KPU!";
+            } else if (pct >= 0.5) {
+                msg.textContent = "Cukup Baik";
+                msg.style.color = 'var(--warning)';
+                det.textContent = "Kamu sudah mengenal dasar Excel. Ayo praktikkan lebih banyak di KPU!";
+            } else {
+                msg.textContent = "Perlu Belajar Lagi";
+                msg.style.color = 'var(--danger)';
+                det.textContent = "Jangan menyerah! Perbanyak latihan Excel agar lebih siap mengolah data di KPU.";
+            }
+
+            document.getElementById('stOk').textContent = score;
+            document.getElementById('stNo').textContent = questions.length - score;
+            document.getElementById('stTm').textContent = tTotal + 's';
+
+            if (pct >= 0.7) confetti();
+            buildRv();
+        }
+
+        // ===== REVIEW =====
+        function buildRv() {
+            const list = document.getElementById('rvList');
+            list.innerHTML = '';
+            list.classList.remove('show');
+            document.getElementById('rvChev').style.transform = '';
+
+            const L = ['A', 'B', 'C', 'D'];
+
+            questions.forEach((q, i) => {
+                const a = answers[i];
+                const ok = a.sel === a.cor;
+
+                const d = document.createElement('div');
+                d.className = `rv-item ${ok ? 'ok' : 'no'}`;
+
+                let ah = '';
+                if (a.sel === -1) {
+                    ah = `<span class="w">Tidak dijawab</span> &mdash; Jawaban benar: <span class="c">${L[a.cor]}. ${q.options[a.cor]}</span>`;
+                } else if (ok) {
+                    ah = `<span class="c">${L[a.sel]}. ${q.options[a.sel]}</span>`;
+                } else {
+                    ah = `<span class="w">${L[a.sel]}. ${q.options[a.sel]}</span> &rarr; Jawaban benar: <span class="c">${L[a.cor]}. ${q.options[a.cor]}</span>`;
+                }
+
+                d.innerHTML = `
+                    <div class="rv-q">${i + 1}. ${q.q}</div>
+                    <div class="rv-a">${ah}</div>
+                    <div class="rv-exp">${q.explanation}</div>
+                `;
+                list.appendChild(d);
+            });
+        }
+
+        function toggleRv() {
+            const list = document.getElementById('rvList');
+            const chev = document.getElementById('rvChev');
+            list.classList.toggle('show');
+            chev.style.transform = list.classList.contains('show') ? 'rotate(180deg)' : '';
+        }
+
+        // ===== RESTART =====
+        function restart() {
+            showScr('startScr');
+        }
+
+        // ===== CONFETTI =====
+        function confetti() {
+            const cv = document.getElementById('confCv');
+            const cx = cv.getContext('2d');
+            cv.width = window.innerWidth;
+            cv.height = window.innerHeight;
+
+            const ps = [];
+            const cs = ['#2ecc71', '#a8e06c', '#1abc9c', '#f39c12', '#1d8348', '#ffffff'];
+
+            for (let i = 0; i < 130; i++) {
+                ps.push({
+                    x: Math.random() * cv.width,
+                    y: Math.random() * cv.height - cv.height,
+                    w: Math.random() * 10 + 4,
+                    h: Math.random() * 6 + 3,
+                    c: cs[Math.floor(Math.random() * cs.length)],
+                    vy: Math.random() * 3 + 2,
+                    vx: (Math.random() - 0.5) * 2.5,
+                    r: Math.random() * 360,
+                    rs: (Math.random() - 0.5) * 10
+                });
+            }
+
+            let f = 0;
+            function draw() {
+                cx.clearRect(0, 0, cv.width, cv.height);
+                f++;
+                ps.forEach(p => {
+                    p.y += p.vy;
+                    p.x += p.vx;
+                    p.r += p.rs;
+                    cx.save();
+                    cx.translate(p.x, p.y);
+                    cx.rotate(p.r * Math.PI / 180);
+                    cx.fillStyle = p.c;
+                    cx.globalAlpha = Math.max(0, 1 - f / 180);
+                    cx.fillRect(-p.w / 2, -p.h / 2, p.w, p.h);
+                    cx.restore();
+                });
+                if (f < 200) requestAnimationFrame(draw);
+                else cx.clearRect(0, 0, cv.width, cv.height);
+            }
+            draw();
+        }
+
+        window.addEventListener('resize', () => {
+            const cv = document.getElementById('confCv');
+            cv.width = window.innerWidth;
+            cv.height = window.innerHeight;
+        });
+    </script>
+</body>
+</html>
