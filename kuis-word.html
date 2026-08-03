@@ -852,7 +852,7 @@
             </p>
 
             <div class="info-row">
-                <div class="info-chip"><i class="fas fa-list-ol"></i> 10 Soal Pilihan Ganda</div>
+                <div class="info-chip"><i class="fas fa-list-ol"></i> 14 Soal Pilihan Ganda</div>
                 <div class="info-chip"><i class="fas fa-clock"></i> 20 Detik per Soal</div>
                 <div class="info-chip"><i class="fas fa-graduation-cap"></i> Level SMK</div>
             </div>
@@ -874,7 +874,7 @@
             </a>
 
             <div class="quiz-top">
-                <span class="q-progress" id="qProg">1 / 10</span>
+                <span class="q-progress" id="qProg">1 / 14</span>
                 <div class="q-timer" id="qTimer">
                     <i class="fas fa-clock"></i>
                     <span id="qTime">20</span>
@@ -915,7 +915,7 @@
                             stroke-dasharray="427.26" stroke-dashoffset="427.26"></circle>
                     </svg>
                     <span class="s-val" id="sVal">0</span>
-                    <span class="s-label">dari 10</span>
+                    <span class="s-label">dari 14</span>
                 </div>
                 <div class="r-msg" id="rMsg"></div>
                 <div class="r-detail" id="rDetail"></div>
@@ -1071,6 +1071,51 @@
                 ],
                 answer: 1,
                 explanation: "File > Info > Protect Document memungkinkan kita memberi perlindungan pada dokumen, seperti password untuk membuka, membatasi editing, atau menandai sebagai final. Penting untuk dokumen resmi KPU."
+            },
+            // === SOAL TAMBAHAN TENTANG UKURAN KERTAS ===
+            {
+                q: "Untuk mencetak surat dinas resmi KPU, ukuran kertas yang paling umum dan menjadi standar di instansi pemerintah Indonesia adalah...",
+                options: [
+                    "A3 (297 x 420 mm)",
+                    "A4 (210 x 297 mm)",
+                    "F4/Folio (215 x 330 mm)",
+                    "Letter (216 x 279 mm)"
+                ],
+                answer: 2,
+                explanation: "F4 atau Folio (215 x 330 mm) adalah ukuran kertas standar yang paling umum digunakan untuk surat dinas resmi di instansi pemerintah Indonesia, termasuk KPU. Sedangkan A4 sering digunakan untuk dokumen internasional."
+            },
+            {
+                q: "Siswi ingin mengetik dokumen Undangan KPU dengan ukuran kertas A4. Langkah yang benar untuk mengatur ukuran kertas tersebut adalah...",
+                options: [
+                    "Home > Font > Size",
+                    "Layout > Size > A4",
+                    "Insert > Page > A4",
+                    "View > Size > A4"
+                ],
+                answer: 1,
+                explanation: "Menu Layout > Size digunakan untuk mengubah ukuran kertas dokumen. Di dalamnya tersedia pilihan ukuran standar seperti Letter, Legal, A4, dan A5."
+            },
+            {
+                q: "KPU akan mencetak tabel rekapitulasi data pemilih yang memiliki banyak kolom melebar. Agar tabel muat di kertas, orientasi kertas harus diubah menjadi...",
+                options: [
+                    "Portrait",
+                    "Landscape",
+                    "Margin Narrow",
+                    "Paper Size Legal"
+                ],
+                answer: 1,
+                explanation: "Orientasi Landscape (mendatar) membuat lebar kertas lebih panjang dari tingginya, sangat cocok untuk tabel yang memiliki banyak kolom. Sedangkan Portrait (tegak) adalah orientasi standar surat."
+            },
+            {
+                q: "Pada saat membuat dokumen resmi, margin tepi kiri kertas surat dinas KPU biasanya dibuat lebih lebar daripada margin kanan. Tujuan utamanya adalah untuk...",
+                options: [
+                    "Agar terlihat lebih simetris",
+                    "Memberi ruang untuk tempat arsip (di-jilid)",
+                    "Memperbanyak jumlah halaman",
+                    "Memperindah tata letak surat"
+                ],
+                answer: 1,
+                explanation: "Margin kiri yang lebih lebar (biasanya 4 cm) berfungsi sebagai area 'gutter' atau ruang untuk penjilidan/tempat arsip, sehingga teks tidak tertutup saat kertas dijilid atau di-staples."
             }
         ];
 
