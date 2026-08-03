@@ -167,7 +167,6 @@
             letter-spacing: 0.3px;
         }
 
-        /* ===== KPU LOGO IMAGE ===== */
         .kpu-logo {
             width: 40px;
             height: 40px;
@@ -196,7 +195,6 @@
         }
 
         .back-link:hover { color: var(--accent-light); }
-
         .back-link i { font-size: 11px; }
 
         /* ===== HERO ===== */
@@ -280,7 +278,7 @@
         .chips {
             display: flex;
             gap: 10px;
-            margin-bottom: 32px;
+            margin-bottom: 24px;
             flex-wrap: wrap;
             justify-content: center;
         }
@@ -298,6 +296,94 @@
         }
 
         .chip i { color: var(--accent-light); }
+
+        /* ===== NAME INPUT ===== */
+        .name-section {
+            width: 100%;
+            max-width: 400px;
+            margin-bottom: 24px;
+        }
+
+        .name-label {
+            display: block;
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--muted);
+            margin-bottom: 8px;
+            text-align: left;
+        }
+
+        .name-input-wrap {
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+
+        .name-input-wrap > i {
+            position: absolute;
+            left: 16px;
+            color: var(--muted);
+            font-size: 15px;
+            transition: color 0.2s;
+            pointer-events: none;
+        }
+
+        .name-input {
+            width: 100%;
+            background: var(--card);
+            border: 2px solid var(--border);
+            border-radius: 12px;
+            padding: 14px 16px 14px 44px;
+            font-family: 'Outfit', sans-serif;
+            font-size: 15px;
+            font-weight: 600;
+            color: var(--fg);
+            outline: none;
+            transition: all 0.25s ease;
+        }
+
+        .name-input::placeholder {
+            color: var(--muted);
+            font-weight: 400;
+            opacity: 0.5;
+        }
+
+        .name-input:focus {
+            border-color: var(--accent-light);
+        }
+
+        .name-input-wrap:focus-within > i {
+            color: var(--accent-light);
+        }
+
+        .name-error {
+            font-size: 12px;
+            color: var(--danger);
+            margin-top: 6px;
+            text-align: left;
+            display: none;
+            animation: enterScr 0.3s ease;
+        }
+
+        .name-error.show { display: block; }
+
+        /* ===== BEST SCORE ===== */
+        .best-badge {
+            display: none;
+            align-items: center;
+            gap: 8px;
+            background: rgba(46,204,113,0.08);
+            border: 1px solid rgba(46,204,113,0.2);
+            border-radius: 10px;
+            padding: 10px 18px;
+            margin-bottom: 24px;
+            font-size: 13px;
+            color: var(--accent-light);
+        }
+
+        .best-badge.show { display: flex; }
+        .best-badge i { font-size: 16px; }
+        .best-badge strong { font-family: 'JetBrains Mono', monospace; }
 
         .btn-go {
             background: linear-gradient(135deg, var(--accent), var(--accent-light));
@@ -656,6 +742,39 @@
             margin-top: 4px;
         }
 
+        /* ===== SAVED & NEW BEST BADGES ===== */
+        .saved-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: rgba(46,204,113,0.08);
+            border: 1px solid rgba(46,204,113,0.2);
+            border-radius: 8px;
+            padding: 8px 16px;
+            font-size: 12px;
+            color: var(--accent-light);
+            margin-top: 16px;
+            animation: enterScr 0.4s ease;
+        }
+
+        .saved-badge i { font-size: 14px; }
+
+        .new-best-badge {
+            display: none;
+            align-items: center;
+            gap: 6px;
+            background: rgba(243,156,18,0.1);
+            border: 1px solid rgba(243,156,18,0.3);
+            border-radius: 8px;
+            padding: 8px 16px;
+            font-size: 12px;
+            color: var(--warning);
+            margin-top: 8px;
+            animation: enterScr 0.4s ease;
+        }
+
+        .new-best-badge.show { display: inline-flex; }
+
         /* ===== REVIEW ===== */
         .rv-sec { width: 100%; margin-top: 8px; }
 
@@ -761,6 +880,12 @@
             color: var(--danger);
         }
 
+        .toast-info {
+            background: rgba(168,224,108,0.12);
+            border: 1px solid rgba(168,224,108,0.3);
+            color: var(--lime);
+        }
+
         @keyframes tIn {
             from { opacity: 0; transform: translateX(40px); }
             to { opacity: 1; transform: translateX(0); }
@@ -837,13 +962,12 @@
         <!-- ===== START ===== -->
         <div class="scr active" id="startScr">
 
-            <!-- Tombol Kembali ke index.html -->
             <a href="index.html" class="back-link">
                 <i class="fas fa-arrow-left"></i> Kembali ke Menu Utama
             </a>
 
             <div class="kpu-badge">
-                <img src="logo-kpu.png" alt="Logo KPU" class="kpu-logo">
+                <img src="logo-kpu.png" alt="Logo KPU" class="kpu-logo" onerror="this.style.display='none'">
                 <div>
                     <strong>KPU Kabupaten Sumba Barat Daya</strong>
                     <span>Program Praktik Kerja Lapangan</span>
@@ -873,7 +997,29 @@
                 <div class="chip"><i class="fas fa-graduation-cap"></i> Level SMK</div>
             </div>
 
-            <button class="btn-go" onclick="startQuiz()" aria-label="Mulai Kuis">
+            <!-- Input Nama -->
+            <div class="name-section">
+                <label class="name-label" for="studentName">
+                    <i class="fas fa-user" style="margin-right:4px"></i> Nama Lengkap
+                </label>
+                <div class="name-input-wrap">
+                    <input type="text" id="studentName" class="name-input"
+                           placeholder="Masukkan nama kamu..." maxlength="50"
+                           autocomplete="off" spellcheck="false">
+                    <i class="fas fa-pen"></i>
+                </div>
+                <div class="name-error" id="nameError">
+                    <i class="fas fa-exclamation-circle"></i> Nama harus diisi sebelum mulai kuis
+                </div>
+            </div>
+
+            <!-- Skor Terbaik -->
+            <div class="best-badge" id="bestBadge">
+                <i class="fas fa-trophy"></i>
+                <span>Skor terbaik kamu: <strong id="bestVal">0</strong>/10</span>
+            </div>
+
+            <button class="btn-go" id="btnGo" onclick="startQuiz()" aria-label="Mulai Kuis">
                 Mulai Kuis <i class="fas fa-arrow-right" style="margin-left:8px"></i>
             </button>
 
@@ -916,7 +1062,7 @@
         <!-- ===== RESULT ===== -->
         <div class="scr" id="resultScr">
             <div class="kpu-badge" style="margin-bottom:20px">
-                <img src="logo-kpu.png" alt="Logo KPU" class="kpu-logo">
+                <img src="logo-kpu.png" alt="Logo KPU" class="kpu-logo" onerror="this.style.display='none'">
                 <div>
                     <strong>KPU Kabupaten Sumba Barat Daya</strong>
                     <span>Hasil Evaluasi PKL</span>
@@ -949,6 +1095,15 @@
                         <div class="st-d">Waktu</div>
                     </div>
                 </div>
+
+                <div class="saved-badge" id="savedBadge">
+                    <i class="fas fa-check-circle"></i>
+                    <span>Nilai tersimpan untuk <strong id="savedName"></strong></span>
+                </div>
+                <div class="new-best-badge" id="newBestBadge">
+                    <i class="fas fa-star"></i>
+                    <span>Skor terbaik baru!</span>
+                </div>
             </div>
 
             <div class="rv-sec">
@@ -976,7 +1131,12 @@
     </div>
 
     <script>
-        // ===== DATA SOAL MICROSOFT EXCEL — Konteks KPU =====
+        // ===== KONFIGURASI KUIS =====
+        const QUIZ_NAME = 'Microsoft Excel';
+        const QUIZ_FILE = 'kuis-excel.html';
+        const STORAGE_KEY = 'kpu_quiz_scores';
+
+        // ===== DATA SOAL =====
         const questions = [
             {
                 q: "Di KPU Sumba Barat Daya, siswi diminta mengolah data jumlah pemilih menggunakan spreadsheet. Program yang tepat digunakan adalah...",
@@ -1098,14 +1258,84 @@
         let tTotal = 0;
         let answers = [];
         let tStart = 0;
+        let studentName = '';
+        let shuffled = [];
+
+        // ===== LOCAL STORAGE =====
+        function getScores() {
+            try { return JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]'); }
+            catch (e) { return []; }
+        }
+
+        function saveScore(name, sc, total, timeTaken) {
+            const scores = getScores();
+            scores.push({
+                id: Date.now(),
+                quizName: QUIZ_NAME,
+                quizFile: QUIZ_FILE,
+                studentName: name,
+                score: sc,
+                total: total,
+                percentage: Math.round((sc / total) * 100),
+                timeTaken: timeTaken,
+                date: new Date().toISOString()
+            });
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(scores));
+        }
+
+        function getBestScore(name) {
+            const scores = getScores();
+            const myScores = scores.filter(s =>
+                s.quizFile === QUIZ_FILE &&
+                s.studentName.toLowerCase() === name.toLowerCase()
+            );
+            if (myScores.length === 0) return null;
+            return Math.max(...myScores.map(s => s.score));
+        }
+
+        // ===== SHUFFLE =====
+        function shuffleArr(arr) {
+            const a = [...arr];
+            for (let i = a.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [a[i], a[j]] = [a[j], a[i]];
+            }
+            return a;
+        }
+
+        // ===== TAMPILKAN SKOR TERBAIK =====
+        function updateBestDisplay() {
+            const input = document.getElementById('studentName');
+            const badge = document.getElementById('bestBadge');
+            const val = document.getElementById('bestVal');
+            const name = input.value.trim();
+            if (name.length >= 2) {
+                const best = getBestScore(name);
+                if (best !== null) {
+                    val.textContent = best;
+                    badge.classList.add('show');
+                    return;
+                }
+            }
+            badge.classList.remove('show');
+        }
+
+        document.getElementById('studentName').addEventListener('input', function() {
+            document.getElementById('nameError').classList.remove('show');
+            updateBestDisplay();
+        });
+
+        document.getElementById('studentName').addEventListener('keydown', function(e) {
+            if (e.key === 'Enter') startQuiz();
+        });
 
         // ===== TOAST =====
         function toast(msg, type) {
             const w = document.getElementById('toastWrap');
             const t = document.createElement('div');
             t.className = `toast toast-${type}`;
-            const ic = type === 'ok' ? 'fa-check-circle' : 'fa-times-circle';
-            t.innerHTML = `<i class="fas ${ic}"></i> ${msg}`;
+            const icons = { ok: 'fa-check-circle', no: 'fa-times-circle', info: 'fa-info-circle' };
+            t.innerHTML = `<i class="fas ${icons[type] || icons.info}"></i> ${msg}`;
             w.appendChild(t);
             setTimeout(() => t.remove(), 3000);
         }
@@ -1118,9 +1348,33 @@
 
         // ===== START =====
         function startQuiz() {
+            const nameInput = document.getElementById('studentName');
+            const name = nameInput.value.trim();
+
+            if (name.length < 2) {
+                document.getElementById('nameError').classList.add('show');
+                nameInput.focus();
+                return;
+            }
+
+            studentName = name;
             cur = 0;
             score = 0;
             answers = [];
+
+            // Acak soal dan opsi
+            shuffled = shuffleArr(questions).map(q => {
+                const correctText = q.options[q.answer];
+                const shuffledOpts = shuffleArr(q.options);
+                const newAnswer = shuffledOpts.indexOf(correctText);
+                return {
+                    q: q.q,
+                    options: shuffledOpts,
+                    answer: newAnswer,
+                    explanation: q.explanation
+                };
+            });
+
             tStart = Date.now();
             showScr('quizScr');
             loadQ();
@@ -1128,9 +1382,9 @@
 
         // ===== LOAD Q =====
         function loadQ() {
-            const q = questions[cur];
-            document.getElementById('qProg').textContent = `${cur + 1} / ${questions.length}`;
-            document.getElementById('pFill').style.width = `${((cur + 1) / questions.length) * 100}%`;
+            const q = shuffled[cur];
+            document.getElementById('qProg').textContent = `${cur + 1} / ${shuffled.length}`;
+            document.getElementById('pFill').style.width = `${((cur + 1) / shuffled.length) * 100}%`;
             document.getElementById('qNum').textContent = `Soal ${String(cur + 1).padStart(2, '0')}`;
             document.getElementById('qText').textContent = q.q;
 
@@ -1172,7 +1426,7 @@
         }
 
         function timeout() {
-            const q = questions[cur];
+            const q = shuffled[cur];
             const btns = document.querySelectorAll('.opt');
             btns.forEach((b, i) => {
                 b.classList.add('off');
@@ -1187,7 +1441,7 @@
         // ===== PICK =====
         function pick(i) {
             clearInterval(tmr);
-            const q = questions[cur];
+            const q = shuffled[cur];
             const btns = document.querySelectorAll('.opt');
             const ok = i === q.answer;
 
@@ -1220,7 +1474,7 @@
         // ===== NEXT =====
         function nextQ() {
             cur++;
-            if (cur < questions.length) loadQ();
+            if (cur < shuffled.length) loadQ();
             else showResult();
         }
 
@@ -1229,10 +1483,15 @@
             tTotal = Math.round((Date.now() - tStart) / 1000);
             showScr('resultScr');
 
+            // Simpan nilai
+            const prevBest = getBestScore(studentName);
+            saveScore(studentName, score, shuffled.length, tTotal);
+            const isNewBest = (prevBest === null || score > prevBest);
+
             const sEl = document.getElementById('sVal');
             const ring = document.getElementById('rFg');
             const circ = 2 * Math.PI * 68;
-            const pct = score / questions.length;
+            const pct = score / shuffled.length;
 
             let col = 'var(--danger)';
             if (pct >= 0.8) col = 'var(--success)';
@@ -1275,8 +1534,21 @@
             }
 
             document.getElementById('stOk').textContent = score;
-            document.getElementById('stNo').textContent = questions.length - score;
+            document.getElementById('stNo').textContent = shuffled.length - score;
             document.getElementById('stTm').textContent = tTotal + 's';
+
+            // Badge tersimpan
+            document.getElementById('savedName').textContent = studentName;
+            document.getElementById('savedBadge').style.display = 'inline-flex';
+
+            // Badge skor terbaik baru
+            const newBestEl = document.getElementById('newBestBadge');
+            if (isNewBest && score > 0) {
+                newBestEl.classList.add('show');
+                toast("Skor terbaik baru!", "info");
+            } else {
+                newBestEl.classList.remove('show');
+            }
 
             if (pct >= 0.7) confetti();
             buildRv();
@@ -1291,7 +1563,7 @@
 
             const L = ['A', 'B', 'C', 'D'];
 
-            questions.forEach((q, i) => {
+            shuffled.forEach((q, i) => {
                 const a = answers[i];
                 const ok = a.sel === a.cor;
 
@@ -1326,6 +1598,7 @@
         // ===== RESTART =====
         function restart() {
             showScr('startScr');
+            updateBestDisplay();
         }
 
         // ===== CONFETTI =====
