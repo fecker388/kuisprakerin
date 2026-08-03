@@ -35,11 +35,8 @@
             overflow-x: hidden;
         }
 
-        /* ===== BACKGROUND ===== */
         .bg-pattern {
-            position: fixed;
-            inset: 0;
-            z-index: 0;
+            position: fixed; inset: 0; z-index: 0;
             background-image:
                 radial-gradient(circle at 15% 50%, rgba(0,229,160,0.05) 0%, transparent 50%),
                 radial-gradient(circle at 85% 20%, rgba(0,201,219,0.06) 0%, transparent 50%),
@@ -47,9 +44,7 @@
         }
 
         .bg-grid {
-            position: fixed;
-            inset: 0;
-            z-index: 0;
+            position: fixed; inset: 0; z-index: 0;
             background-image:
                 linear-gradient(rgba(0,229,160,0.025) 1px, transparent 1px),
                 linear-gradient(90deg, rgba(0,229,160,0.025) 1px, transparent 1px);
@@ -57,779 +52,299 @@
         }
 
         .bg-glow {
-            position: fixed;
-            border-radius: 50%;
-            filter: blur(160px);
-            z-index: 0;
-            pointer-events: none;
+            position: fixed; border-radius: 50%; filter: blur(160px);
+            z-index: 0; pointer-events: none;
         }
+        .bg-glow-1 { top: -200px; right: -100px; width: 500px; height: 500px; background: var(--accent); opacity: 0.06; }
+        .bg-glow-2 { bottom: -250px; left: -150px; width: 600px; height: 600px; background: var(--teal); opacity: 0.1; }
 
-        .bg-glow-1 {
-            top: -200px;
-            right: -100px;
-            width: 500px;
-            height: 500px;
-            background: var(--accent);
-            opacity: 0.06;
+        .scan-line {
+            position: fixed; top: 0; left: 0; right: 0; height: 2px;
+            background: linear-gradient(90deg, transparent, var(--accent), transparent);
+            opacity: 0.08; z-index: 0; animation: scanMove 6s linear infinite;
         }
+        @keyframes scanMove { 0% { top: -2px; } 100% { top: 100vh; } }
 
-        .bg-glow-2 {
-            bottom: -250px;
-            left: -150px;
-            width: 600px;
-            height: 600px;
-            background: var(--teal);
-            opacity: 0.1;
-        }
-
-        /* ===== FLOATING NODES ===== */
-        .floating-elements {
-            position: fixed;
-            inset: 0;
-            z-index: 0;
-            pointer-events: none;
-            overflow: hidden;
-        }
-
-        .float-node {
-            position: absolute;
-            opacity: 0.25;
-            animation: floatNode 16s ease-in-out infinite;
-        }
-
-        .float-node .node-core {
-            width: 6px;
-            height: 6px;
-            background: var(--accent);
-            border-radius: 50%;
-        }
-
-        .float-node .node-ring {
-            position: absolute;
-            width: 24px;
-            height: 24px;
-            border: 1px solid rgba(0,229,160,0.15);
-            border-radius: 50%;
-            top: -9px;
-            left: -9px;
-        }
-
-        .float-node .node-line {
-            position: absolute;
-            width: 40px;
-            height: 1px;
-            background: linear-gradient(90deg, rgba(0,229,160,0.2), transparent);
-            top: 2.5px;
-            left: 6px;
-            transform-origin: left center;
-        }
-
+        .floating-elements { position: fixed; inset: 0; z-index: 0; pointer-events: none; overflow: hidden; }
+        .float-node { position: absolute; opacity: 0.25; animation: floatNode 16s ease-in-out infinite; }
+        .float-node .node-core { width: 6px; height: 6px; background: var(--accent); border-radius: 50%; }
+        .float-node .node-ring { position: absolute; width: 24px; height: 24px; border: 1px solid rgba(0,229,160,0.15); border-radius: 50%; top: -9px; left: -9px; }
+        .float-node .node-line { position: absolute; width: 40px; height: 1px; background: linear-gradient(90deg, rgba(0,229,160,0.2), transparent); top: 2.5px; left: 6px; transform-origin: left center; }
         @keyframes floatNode {
             0%, 100% { transform: translateY(0) scale(1); opacity: 0.25; }
             50% { transform: translateY(-30px) scale(1.3); opacity: 0.5; }
         }
 
-        /* ===== SCAN LINE ===== */
-        .scan-line {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 2px;
-            background: linear-gradient(90deg, transparent, var(--accent), transparent);
-            opacity: 0.08;
-            z-index: 0;
-            animation: scanMove 6s linear infinite;
-        }
-
-        @keyframes scanMove {
-            0% { top: -2px; }
-            100% { top: 100vh; }
-        }
-
-        /* ===== MAIN CONTAINER ===== */
         .app-container {
-            position: relative;
-            z-index: 1;
-            max-width: 720px;
-            margin: 0 auto;
-            padding: 24px 16px;
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
+            position: relative; z-index: 1; max-width: 720px; margin: 0 auto;
+            padding: 24px 16px; min-height: 100vh;
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
         }
 
-        /* ===== SCREENS ===== */
-        .screen {
-            display: none;
-            width: 100%;
-            animation: fadeSlideIn 0.5s ease-out;
-        }
+        .screen { display: none; width: 100%; animation: fadeSlideIn 0.5s ease-out; }
+        .screen.active { display: flex; flex-direction: column; align-items: center; }
+        @keyframes fadeSlideIn { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
 
-        .screen.active {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-
-        @keyframes fadeSlideIn {
-            from { opacity: 0; transform: translateY(30px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        /* ===== KPU HEADER BADGE ===== */
         .kpu-badge {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            background: var(--card);
-            border: 1px solid var(--border);
-            border-radius: 10px;
-            padding: 10px 20px;
-            margin-bottom: 28px;
-            font-size: 12px;
-            color: var(--muted);
-            letter-spacing: 0.5px;
+            display: flex; align-items: center; gap: 12px;
+            background: var(--card); border: 1px solid var(--border);
+            border-radius: 10px; padding: 10px 20px; margin-bottom: 28px;
+            font-size: 12px; color: var(--muted); letter-spacing: 0.5px;
         }
+        .kpu-logo { width: 40px; height: 40px; object-fit: contain; flex-shrink: 0; border-radius: 6px; }
+        .kpu-badge-text { display: flex; flex-direction: column; line-height: 1.4; }
+        .kpu-badge-text strong { color: var(--fg); font-size: 13px; }
 
-        .kpu-logo {
-            width: 40px;
-            height: 40px;
-            object-fit: contain;
-            flex-shrink: 0;
-            border-radius: 6px;
-        }
-
-        .kpu-badge-text {
-            display: flex;
-            flex-direction: column;
-            line-height: 1.4;
-        }
-
-        .kpu-badge-text strong {
-            color: var(--fg);
-            font-size: 13px;
-        }
-
-        /* ===== BACK LINK ===== */
         .back-link {
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            color: var(--muted);
-            font-size: 13px;
-            text-decoration: none;
-            margin-bottom: 20px;
-            transition: color 0.2s;
-            font-weight: 500;
+            display: inline-flex; align-items: center; gap: 6px;
+            color: var(--muted); font-size: 13px; text-decoration: none;
+            margin-bottom: 20px; transition: color 0.2s; font-weight: 500;
         }
-
         .back-link:hover { color: var(--accent); }
         .back-link i { font-size: 11px; }
 
-        /* ===== HERO ===== */
         .hero-icon {
-            width: 110px;
-            height: 110px;
+            width: 110px; height: 110px;
             background: linear-gradient(135deg, var(--accent), var(--teal));
-            border-radius: 30px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 48px;
-            color: var(--bg);
-            margin-bottom: 24px;
+            border-radius: 30px; display: flex; align-items: center; justify-content: center;
+            font-size: 48px; color: var(--bg); margin-bottom: 24px;
             box-shadow: 0 12px 40px rgba(0,229,160,0.2);
-            animation: heroPulse 3s ease-in-out infinite;
-            position: relative;
+            animation: heroPulse 3s ease-in-out infinite; position: relative;
         }
-
         .hero-icon::after {
-            content: '';
-            position: absolute;
-            inset: -6px;
-            border-radius: 34px;
-            border: 2px solid rgba(0,229,160,0.15);
-            animation: heroRing 3s ease-in-out infinite;
+            content: ''; position: absolute; inset: -6px; border-radius: 34px;
+            border: 2px solid rgba(0,229,160,0.15); animation: heroRing 3s ease-in-out infinite;
         }
-
-        @keyframes heroPulse {
-            0%, 100% { box-shadow: 0 12px 40px rgba(0,229,160,0.2); }
-            50% { box-shadow: 0 12px 60px rgba(0,229,160,0.35); }
-        }
-
-        @keyframes heroRing {
-            0%, 100% { transform: scale(1); opacity: 0.5; }
-            50% { transform: scale(1.08); opacity: 1; }
-        }
+        @keyframes heroPulse { 0%, 100% { box-shadow: 0 12px 40px rgba(0,229,160,0.2); } 50% { box-shadow: 0 12px 60px rgba(0,229,160,0.35); } }
+        @keyframes heroRing { 0%, 100% { transform: scale(1); opacity: 0.5; } 50% { transform: scale(1.08); opacity: 1; } }
 
         .hero-title {
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 22px;
-            font-weight: 700;
-            text-align: center;
-            margin-bottom: 6px;
-            line-height: 1.3;
+            font-family: 'JetBrains Mono', monospace; font-size: 22px;
+            font-weight: 700; text-align: center; margin-bottom: 6px; line-height: 1.3;
         }
-
         .hero-title .highlight {
             background: linear-gradient(135deg, var(--accent), var(--accent2));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
         }
+        .hero-subtitle { color: var(--muted); font-size: 14px; text-align: center; margin-bottom: 32px; line-height: 1.7; }
 
-        .hero-subtitle {
-            color: var(--muted);
-            font-size: 14px;
-            text-align: center;
-            margin-bottom: 32px;
-            line-height: 1.7;
-        }
-
-        .info-badges {
-            display: flex;
-            gap: 10px;
-            margin-bottom: 32px;
-            flex-wrap: wrap;
-            justify-content: center;
-        }
-
-        .badge {
-            background: var(--card);
-            border: 1px solid var(--border);
-            border-radius: 10px;
-            padding: 10px 16px;
-            font-size: 12px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            color: var(--muted);
-        }
-
-        .badge i { color: var(--accent); }
-
-        .btn-primary {
-            background: linear-gradient(135deg, var(--accent), var(--accent2));
-            color: var(--bg);
-            border: none;
-            padding: 16px 48px;
-            border-radius: 12px;
-            font-family: 'Space Grotesk', sans-serif;
-            font-size: 16px;
-            font-weight: 700;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            letter-spacing: 0.5px;
-        }
-
-        .btn-primary:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 30px rgba(0,229,160,0.3);
-        }
-
-        .btn-primary:active { transform: translateY(0); }
-
-        /* ===== QUIZ SCREEN ===== */
-        .quiz-header {
-            width: 100%;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            margin-bottom: 16px;
-        }
-
-        .quiz-progress-text {
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 14px;
-            color: var(--accent);
-            font-weight: 700;
-        }
-
-        .quiz-timer {
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 14px;
-            color: var(--muted);
-            background: var(--card);
-            padding: 6px 14px;
-            border-radius: 8px;
-            border: 1px solid var(--border);
-            transition: all 0.3s ease;
-        }
-
-        .quiz-timer.warning {
-            color: var(--danger);
-            border-color: var(--danger);
-            animation: timerBlink 0.5s ease-in-out infinite alternate;
-        }
-
-        @keyframes timerBlink { to { opacity: 0.5; } }
-
-        .progress-bar-container {
-            width: 100%;
-            height: 6px;
-            background: var(--card);
-            border-radius: 10px;
-            margin-bottom: 24px;
-            overflow: hidden;
-        }
-
-        .progress-bar-fill {
-            height: 100%;
-            background: linear-gradient(90deg, var(--accent), var(--accent2));
-            border-radius: 10px;
-            transition: width 0.5s ease;
-        }
-
-        .question-card {
-            width: 100%;
-            background: var(--card);
-            border: 1px solid var(--border);
-            border-radius: var(--radius);
-            padding: 28px 24px;
-            margin-bottom: 20px;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .question-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 3px;
-            background: linear-gradient(90deg, var(--accent), var(--accent2));
-        }
-
-        .question-number {
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 11px;
-            color: var(--accent);
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            margin-bottom: 12px;
-        }
-
-        .question-text {
-            font-size: 17px;
-            font-weight: 600;
-            line-height: 1.65;
-            color: var(--fg);
-        }
-
-        .options-list {
-            width: 100%;
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-            margin-bottom: 20px;
-        }
-
-        .option-btn {
-            width: 100%;
-            background: var(--card);
-            border: 2px solid var(--border);
-            border-radius: 12px;
-            padding: 14px 18px;
-            font-family: 'Space Grotesk', sans-serif;
-            font-size: 14px;
-            color: var(--fg);
-            cursor: pointer;
-            text-align: left;
-            display: flex;
-            align-items: flex-start;
-            gap: 12px;
-            transition: all 0.25s ease;
-            line-height: 1.5;
-        }
-
-        .option-btn:hover:not(.disabled) {
-            border-color: var(--accent);
-            background: var(--card-hover);
-            transform: translateX(4px);
-        }
-
-        .option-btn .option-label {
-            width: 30px;
-            height: 30px;
-            border-radius: 8px;
-            background: var(--bg2);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-family: 'JetBrains Mono', monospace;
-            font-weight: 700;
-            font-size: 12px;
-            color: var(--muted);
-            flex-shrink: 0;
-            transition: all 0.25s ease;
-            margin-top: 1px;
-        }
-
-        .option-btn:hover:not(.disabled) .option-label {
-            background: var(--accent);
-            color: var(--bg);
-        }
-
-        .option-btn.correct {
-            border-color: var(--success);
-            background: rgba(0,229,160,0.08);
-        }
-
-        .option-btn.correct .option-label {
-            background: var(--success);
-            color: var(--bg);
-        }
-
-        .option-btn.wrong {
-            border-color: var(--danger);
-            background: rgba(255,77,106,0.08);
-        }
-
-        .option-btn.wrong .option-label {
-            background: var(--danger);
-            color: #fff;
-        }
-
-        .option-btn.disabled { cursor: default; opacity: 0.55; }
-        .option-btn.correct.disabled,
-        .option-btn.wrong.disabled { opacity: 1; }
-
-        .feedback-card {
-            width: 100%;
-            border-radius: 12px;
-            padding: 16px 20px;
-            margin-bottom: 18px;
-            display: none;
-            align-items: flex-start;
-            gap: 12px;
-            font-size: 13px;
-            line-height: 1.6;
-            animation: fadeSlideIn 0.3s ease;
-        }
-
-        .feedback-card.show { display: flex; }
-
-        .feedback-card.correct-fb {
-            background: rgba(0,229,160,0.08);
-            border: 1px solid rgba(0,229,160,0.25);
-            color: var(--success);
-        }
-
-        .feedback-card.wrong-fb {
-            background: rgba(255,77,106,0.08);
-            border: 1px solid rgba(255,77,106,0.25);
-            color: var(--danger);
-        }
-
-        .feedback-card i { font-size: 18px; margin-top: 2px; flex-shrink: 0; }
-
-        .btn-next {
-            background: var(--card);
-            border: 2px solid var(--border);
-            color: var(--fg);
-            padding: 14px 36px;
-            border-radius: 12px;
-            font-family: 'Space Grotesk', sans-serif;
-            font-size: 15px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            display: none;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .btn-next.show { display: flex; }
-
-        .btn-next:hover {
-            border-color: var(--accent);
-            background: var(--card-hover);
-            transform: translateY(-2px);
-        }
-
-        /* ===== RESULT SCREEN ===== */
-        .result-card {
-            width: 100%;
-            background: var(--card);
-            border: 1px solid var(--border);
-            border-radius: var(--radius);
-            padding: 36px 28px;
-            text-align: center;
-            margin-bottom: 24px;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .result-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 3px;
-            background: linear-gradient(90deg, var(--accent), var(--accent2));
-        }
-
-        .score-circle {
-            width: 160px;
-            height: 160px;
-            border-radius: 50%;
-            margin: 0 auto 24px;
-            position: relative;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-direction: column;
-        }
-
-        .score-circle svg {
-            position: absolute;
-            top: 0;
-            left: 0;
-            transform: rotate(-90deg);
-        }
-
-        .score-circle .track {
-            fill: none;
-            stroke: var(--bg2);
-            stroke-width: 8;
-        }
-
-        .score-circle .fill-ring {
-            fill: none;
-            stroke-width: 8;
-            stroke-linecap: round;
-            transition: stroke-dashoffset 1.5s ease;
-        }
-
-        .score-value {
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 42px;
-            font-weight: 700;
-            z-index: 1;
-        }
-
-        .score-label {
-            font-size: 13px;
-            color: var(--muted);
-            z-index: 1;
-        }
-
-        .result-message {
-            font-size: 22px;
-            font-weight: 700;
-            margin-bottom: 8px;
-        }
-
-        .result-detail {
-            color: var(--muted);
-            font-size: 14px;
-            margin-bottom: 24px;
-            line-height: 1.6;
-        }
-
-        .stats-row {
-            display: flex;
-            justify-content: center;
-            gap: 28px;
-            margin-bottom: 8px;
-        }
-
-        .stat-item { text-align: center; }
-
-        .stat-num {
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 24px;
-            font-weight: 700;
-        }
-
-        .stat-num.green { color: var(--success); }
-        .stat-num.red { color: var(--danger); }
-        .stat-num.gold { color: var(--gold); }
-
-        .stat-desc {
-            font-size: 12px;
-            color: var(--muted);
-            margin-top: 4px;
-        }
-
-        /* ===== REVIEW ===== */
-        .review-section {
-            width: 100%;
-            margin-top: 8px;
-        }
-
-        .review-toggle {
-            width: 100%;
-            background: var(--card);
-            border: 1px solid var(--border);
-            border-radius: 12px;
-            padding: 14px 20px;
-            font-family: 'Space Grotesk', sans-serif;
-            font-size: 14px;
-            font-weight: 600;
-            color: var(--muted);
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            transition: all 0.25s ease;
-        }
-
-        .review-toggle:hover {
-            border-color: var(--accent);
-            color: var(--fg);
-        }
-
-        .review-list {
-            display: none;
-            flex-direction: column;
-            gap: 10px;
-            margin-top: 10px;
-            animation: fadeSlideIn 0.3s ease;
-        }
-
-        .review-list.show { display: flex; }
-
-        .review-item {
-            background: var(--card);
-            border: 1px solid var(--border);
-            border-radius: 12px;
-            padding: 16px 20px;
-            text-align: left;
-        }
-
-        .review-item.item-correct { border-left: 4px solid var(--success); }
-        .review-item.item-wrong { border-left: 4px solid var(--danger); }
-
-        .review-q {
-            font-size: 13px;
-            font-weight: 600;
-            margin-bottom: 8px;
-            line-height: 1.5;
-        }
-
-        .review-answer {
-            font-size: 12px;
-            color: var(--muted);
-            line-height: 1.5;
-        }
-
-        .review-answer span { font-weight: 600; }
-        .review-answer .ans-correct { color: var(--success); }
-        .review-answer .ans-wrong { color: var(--danger); text-decoration: line-through; opacity: 0.7; }
-
-        /* ===== TOAST ===== */
-        .toast-container {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            z-index: 999;
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-        }
-
-        .toast {
-            padding: 12px 20px;
-            border-radius: 10px;
-            font-size: 13px;
-            font-weight: 600;
-            animation: toastIn 0.3s ease, toastOut 0.3s ease 2.5s forwards;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .toast-success {
-            background: rgba(0,229,160,0.12);
-            border: 1px solid rgba(0,229,160,0.3);
-            color: var(--success);
-        }
-
-        .toast-error {
-            background: rgba(255,77,106,0.12);
-            border: 1px solid rgba(255,77,106,0.3);
-            color: var(--danger);
-        }
-
-        @keyframes toastIn {
-            from { opacity: 0; transform: translateX(40px); }
-            to { opacity: 1; transform: translateX(0); }
-        }
-
-        @keyframes toastOut {
-            from { opacity: 1; }
-            to { opacity: 0; transform: translateY(-10px); }
-        }
-
-        /* ===== CONFETTI ===== */
-        .confetti-canvas {
-            position: fixed;
-            inset: 0;
-            z-index: 50;
-            pointer-events: none;
-        }
-
-        /* ===== FOOTER ===== */
-        .app-footer {
-            margin-top: 32px;
-            font-size: 11px;
-            color: var(--muted);
-            opacity: 0.5;
-            text-align: center;
-            line-height: 1.5;
-        }
-
-        /* ===== HARDWARE ICON DECO ===== */
-        .hw-icons-row {
-            display: flex;
-            gap: 16px;
-            margin-bottom: 28px;
-            flex-wrap: wrap;
-            justify-content: center;
-        }
-
+        .hw-icons-row { display: flex; gap: 16px; margin-bottom: 28px; flex-wrap: wrap; justify-content: center; }
         .hw-icon-chip {
-            width: 44px;
-            height: 44px;
-            background: var(--card);
-            border: 1px solid var(--border);
-            border-radius: 10px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 18px;
-            color: var(--accent);
-            transition: all 0.3s ease;
-            animation: chipFloat 4s ease-in-out infinite;
+            width: 44px; height: 44px; background: var(--card); border: 1px solid var(--border);
+            border-radius: 10px; display: flex; align-items: center; justify-content: center;
+            font-size: 18px; color: var(--accent); transition: all 0.3s ease; animation: chipFloat 4s ease-in-out infinite;
         }
-
         .hw-icon-chip:nth-child(2) { animation-delay: 0.5s; }
         .hw-icon-chip:nth-child(3) { animation-delay: 1s; }
         .hw-icon-chip:nth-child(4) { animation-delay: 1.5s; }
         .hw-icon-chip:nth-child(5) { animation-delay: 2s; }
         .hw-icon-chip:nth-child(6) { animation-delay: 2.5s; }
+        .hw-icon-chip:hover { border-color: var(--accent); transform: translateY(-4px); box-shadow: 0 6px 20px rgba(0,229,160,0.15); }
+        @keyframes chipFloat { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-5px); } }
 
-        .hw-icon-chip:hover {
-            border-color: var(--accent);
-            transform: translateY(-4px);
-            box-shadow: 0 6px 20px rgba(0,229,160,0.15);
+        .info-badges { display: flex; gap: 10px; margin-bottom: 24px; flex-wrap: wrap; justify-content: center; }
+        .badge {
+            background: var(--card); border: 1px solid var(--border); border-radius: 10px;
+            padding: 10px 16px; font-size: 12px; display: flex; align-items: center; gap: 8px; color: var(--muted);
         }
+        .badge i { color: var(--accent); }
 
-        @keyframes chipFloat {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-5px); }
+        /* ===== NAME INPUT ===== */
+        .name-section {
+            width: 100%; max-width: 400px; margin-bottom: 28px;
         }
+        .name-label {
+            display: block; font-size: 13px; font-weight: 600; color: var(--muted);
+            margin-bottom: 8px; text-align: left;
+        }
+        .name-input-wrap {
+            position: relative; display: flex; align-items: center;
+        }
+        .name-input-wrap i {
+            position: absolute; left: 16px; color: var(--muted); font-size: 15px;
+            transition: color 0.2s;
+        }
+        .name-input {
+            width: 100%; background: var(--card); border: 2px solid var(--border);
+            border-radius: 12px; padding: 14px 16px 14px 44px;
+            font-family: 'Space Grotesk', sans-serif; font-size: 15px; font-weight: 600;
+            color: var(--fg); outline: none; transition: all 0.25s ease;
+        }
+        .name-input::placeholder { color: var(--muted); font-weight: 400; opacity: 0.5; }
+        .name-input:focus { border-color: var(--accent); }
+        .name-input:focus + i,
+        .name-input:focus ~ i { color: var(--accent); }
+        .name-input-wrap:focus-within i { color: var(--accent); }
+        .name-error {
+            font-size: 12px; color: var(--danger); margin-top: 6px; text-align: left;
+            display: none; animation: fadeSlideIn 0.3s ease;
+        }
+        .name-error.show { display: block; }
 
-        /* ===== RESPONSIVE ===== */
+        /* ===== BEST SCORE ===== */
+        .best-score-badge {
+            display: none; align-items: center; gap: 8px;
+            background: rgba(0,229,160,0.08); border: 1px solid rgba(0,229,160,0.2);
+            border-radius: 10px; padding: 10px 18px; margin-bottom: 24px;
+            font-size: 13px; color: var(--accent);
+        }
+        .best-score-badge.show { display: flex; }
+        .best-score-badge i { font-size: 16px; }
+        .best-score-badge strong { font-family: 'JetBrains Mono', monospace; }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--accent), var(--accent2));
+            color: var(--bg); border: none; padding: 16px 48px; border-radius: 12px;
+            font-family: 'Space Grotesk', sans-serif; font-size: 16px; font-weight: 700;
+            cursor: pointer; transition: all 0.3s ease; letter-spacing: 0.5px;
+        }
+        .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 30px rgba(0,229,160,0.3); }
+        .btn-primary:active { transform: translateY(0); }
+        .btn-primary:disabled { opacity: 0.4; cursor: not-allowed; transform: none; box-shadow: none; }
+
+        /* ===== QUIZ SCREEN ===== */
+        .quiz-header { width: 100%; display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px; }
+        .quiz-progress-text { font-family: 'JetBrains Mono', monospace; font-size: 14px; color: var(--accent); font-weight: 700; }
+        .quiz-timer {
+            display: flex; align-items: center; gap: 6px;
+            font-family: 'JetBrains Mono', monospace; font-size: 14px; color: var(--muted);
+            background: var(--card); padding: 6px 14px; border-radius: 8px; border: 1px solid var(--border);
+            transition: all 0.3s ease;
+        }
+        .quiz-timer.warning { color: var(--danger); border-color: var(--danger); animation: timerBlink 0.5s ease-in-out infinite alternate; }
+        @keyframes timerBlink { to { opacity: 0.5; } }
+
+        .progress-bar-container { width: 100%; height: 6px; background: var(--card); border-radius: 10px; margin-bottom: 24px; overflow: hidden; }
+        .progress-bar-fill { height: 100%; background: linear-gradient(90deg, var(--accent), var(--accent2)); border-radius: 10px; transition: width 0.5s ease; }
+
+        .question-card {
+            width: 100%; background: var(--card); border: 1px solid var(--border);
+            border-radius: var(--radius); padding: 28px 24px; margin-bottom: 20px;
+            position: relative; overflow: hidden;
+        }
+        .question-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: linear-gradient(90deg, var(--accent), var(--accent2)); }
+        .question-number { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--accent); text-transform: uppercase; letter-spacing: 2px; margin-bottom: 12px; }
+        .question-text { font-size: 17px; font-weight: 600; line-height: 1.65; color: var(--fg); }
+
+        .options-list { width: 100%; display: flex; flex-direction: column; gap: 10px; margin-bottom: 20px; }
+        .option-btn {
+            width: 100%; background: var(--card); border: 2px solid var(--border);
+            border-radius: 12px; padding: 14px 18px; font-family: 'Space Grotesk', sans-serif;
+            font-size: 14px; color: var(--fg); cursor: pointer; text-align: left;
+            display: flex; align-items: flex-start; gap: 12px; transition: all 0.25s ease; line-height: 1.5;
+        }
+        .option-btn:hover:not(.disabled) { border-color: var(--accent); background: var(--card-hover); transform: translateX(4px); }
+        .option-btn .option-label {
+            width: 30px; height: 30px; border-radius: 8px; background: var(--bg2);
+            display: flex; align-items: center; justify-content: center;
+            font-family: 'JetBrains Mono', monospace; font-weight: 700; font-size: 12px;
+            color: var(--muted); flex-shrink: 0; transition: all 0.25s ease; margin-top: 1px;
+        }
+        .option-btn:hover:not(.disabled) .option-label { background: var(--accent); color: var(--bg); }
+        .option-btn.correct { border-color: var(--success); background: rgba(0,229,160,0.08); }
+        .option-btn.correct .option-label { background: var(--success); color: var(--bg); }
+        .option-btn.wrong { border-color: var(--danger); background: rgba(255,77,106,0.08); }
+        .option-btn.wrong .option-label { background: var(--danger); color: #fff; }
+        .option-btn.disabled { cursor: default; opacity: 0.55; }
+        .option-btn.correct.disabled, .option-btn.wrong.disabled { opacity: 1; }
+
+        .feedback-card {
+            width: 100%; border-radius: 12px; padding: 16px 20px; margin-bottom: 18px;
+            display: none; align-items: flex-start; gap: 12px; font-size: 13px; line-height: 1.6;
+            animation: fadeSlideIn 0.3s ease;
+        }
+        .feedback-card.show { display: flex; }
+        .feedback-card.correct-fb { background: rgba(0,229,160,0.08); border: 1px solid rgba(0,229,160,0.25); color: var(--success); }
+        .feedback-card.wrong-fb { background: rgba(255,77,106,0.08); border: 1px solid rgba(255,77,106,0.25); color: var(--danger); }
+        .feedback-card i { font-size: 18px; margin-top: 2px; flex-shrink: 0; }
+
+        .btn-next {
+            background: var(--card); border: 2px solid var(--border); color: var(--fg);
+            padding: 14px 36px; border-radius: 12px; font-family: 'Space Grotesk', sans-serif;
+            font-size: 15px; font-weight: 600; cursor: pointer; transition: all 0.3s ease;
+            display: none; align-items: center; gap: 8px;
+        }
+        .btn-next.show { display: flex; }
+        .btn-next:hover { border-color: var(--accent); background: var(--card-hover); transform: translateY(-2px); }
+
+        /* ===== RESULT SCREEN ===== */
+        .result-card {
+            width: 100%; background: var(--card); border: 1px solid var(--border);
+            border-radius: var(--radius); padding: 36px 28px; text-align: center;
+            margin-bottom: 24px; position: relative; overflow: hidden;
+        }
+        .result-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: linear-gradient(90deg, var(--accent), var(--accent2)); }
+
+        .score-circle {
+            width: 160px; height: 160px; border-radius: 50%; margin: 0 auto 24px;
+            position: relative; display: flex; align-items: center; justify-content: center; flex-direction: column;
+        }
+        .score-circle svg { position: absolute; top: 0; left: 0; transform: rotate(-90deg); }
+        .score-circle .track { fill: none; stroke: var(--bg2); stroke-width: 8; }
+        .score-circle .fill-ring { fill: none; stroke-width: 8; stroke-linecap: round; transition: stroke-dashoffset 1.5s ease; }
+        .score-value { font-family: 'JetBrains Mono', monospace; font-size: 42px; font-weight: 700; z-index: 1; }
+        .score-label { font-size: 13px; color: var(--muted); z-index: 1; }
+
+        .result-message { font-size: 22px; font-weight: 700; margin-bottom: 8px; }
+        .result-detail { color: var(--muted); font-size: 14px; margin-bottom: 24px; line-height: 1.6; }
+        .stats-row { display: flex; justify-content: center; gap: 28px; margin-bottom: 8px; }
+        .stat-item { text-align: center; }
+        .stat-num { font-family: 'JetBrains Mono', monospace; font-size: 24px; font-weight: 700; }
+        .stat-num.green { color: var(--success); }
+        .stat-num.red { color: var(--danger); }
+        .stat-num.gold { color: var(--gold); }
+        .stat-desc { font-size: 12px; color: var(--muted); margin-top: 4px; }
+
+        .saved-badge {
+            display: inline-flex; align-items: center; gap: 6px;
+            background: rgba(0,229,160,0.08); border: 1px solid rgba(0,229,160,0.2);
+            border-radius: 8px; padding: 8px 16px; font-size: 12px; color: var(--accent);
+            margin-top: 16px; animation: fadeSlideIn 0.4s ease;
+        }
+        .saved-badge i { font-size: 14px; }
+
+        .new-best-badge {
+            display: none; align-items: center; gap: 6px;
+            background: rgba(244,162,97,0.1); border: 1px solid rgba(244,162,97,0.3);
+            border-radius: 8px; padding: 8px 16px; font-size: 12px; color: var(--gold);
+            margin-top: 8px; animation: fadeSlideIn 0.4s ease;
+        }
+        .new-best-badge.show { display: inline-flex; }
+
+        .review-section { width: 100%; margin-top: 8px; }
+        .review-toggle {
+            width: 100%; background: var(--card); border: 1px solid var(--border);
+            border-radius: 12px; padding: 14px 20px; font-family: 'Space Grotesk', sans-serif;
+            font-size: 14px; font-weight: 600; color: var(--muted); cursor: pointer;
+            display: flex; align-items: center; justify-content: space-between; transition: all 0.25s ease;
+        }
+        .review-toggle:hover { border-color: var(--accent); color: var(--fg); }
+        .review-list { display: none; flex-direction: column; gap: 10px; margin-top: 10px; animation: fadeSlideIn 0.3s ease; }
+        .review-list.show { display: flex; }
+        .review-item { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 16px 20px; text-align: left; }
+        .review-item.item-correct { border-left: 4px solid var(--success); }
+        .review-item.item-wrong { border-left: 4px solid var(--danger); }
+        .review-q { font-size: 13px; font-weight: 600; margin-bottom: 8px; line-height: 1.5; }
+        .review-answer { font-size: 12px; color: var(--muted); line-height: 1.5; }
+        .review-answer span { font-weight: 600; }
+        .review-answer .ans-correct { color: var(--success); }
+        .review-answer .ans-wrong { color: var(--danger); text-decoration: line-through; opacity: 0.7; }
+
+        .toast-container { position: fixed; top: 20px; right: 20px; z-index: 999; display: flex; flex-direction: column; gap: 8px; }
+        .toast {
+            padding: 12px 20px; border-radius: 10px; font-size: 13px; font-weight: 600;
+            animation: toastIn 0.3s ease, toastOut 0.3s ease 2.5s forwards;
+            display: flex; align-items: center; gap: 8px;
+        }
+        .toast-success { background: rgba(0,229,160,0.12); border: 1px solid rgba(0,229,160,0.3); color: var(--success); }
+        .toast-error { background: rgba(255,77,106,0.12); border: 1px solid rgba(255,77,106,0.3); color: var(--danger); }
+        .toast-info { background: rgba(0,201,219,0.12); border: 1px solid rgba(0,201,219,0.3); color: var(--accent2); }
+        @keyframes toastIn { from { opacity: 0; transform: translateX(40px); } to { opacity: 1; transform: translateX(0); } }
+        @keyframes toastOut { from { opacity: 1; } to { opacity: 0; transform: translateY(-10px); } }
+
+        .confetti-canvas { position: fixed; inset: 0; z-index: 50; pointer-events: none; }
+        .app-footer { margin-top: 32px; font-size: 11px; color: var(--muted); opacity: 0.5; text-align: center; line-height: 1.5; }
+
         @media (max-width: 600px) {
             .hero-title { font-size: 19px; }
             .question-text { font-size: 15px; }
@@ -841,7 +356,6 @@
             .hw-icon-chip { width: 38px; height: 38px; font-size: 15px; }
         }
 
-        /* ===== REDUCED MOTION ===== */
         @media (prefers-reduced-motion: reduce) {
             *, *::before, *::after {
                 animation-duration: 0.01ms !important;
@@ -852,33 +366,25 @@
     </style>
 </head>
 <body>
-
-    <!-- Background -->
     <div class="bg-pattern"></div>
     <div class="bg-grid"></div>
     <div class="bg-glow bg-glow-1"></div>
     <div class="bg-glow bg-glow-2"></div>
     <div class="scan-line"></div>
     <div class="floating-elements" id="floatingElements"></div>
-
-    <!-- Toast -->
     <div class="toast-container" id="toastContainer"></div>
-
-    <!-- Confetti -->
     <canvas class="confetti-canvas" id="confettiCanvas"></canvas>
 
     <div class="app-container">
 
         <!-- ===== START SCREEN ===== -->
         <div class="screen active" id="startScreen">
-
             <a href="index.html" class="back-link">
                 <i class="fas fa-arrow-left"></i> Kembali ke Menu Utama
             </a>
 
             <div class="kpu-badge">
-                <img src="logo-kpu.png" alt="Logo KPU" class="kpu-logo"
-                     onerror="this.style.display='none'">
+                <img src="logo-kpu.png" alt="Logo KPU" class="kpu-logo" onerror="this.style.display='none'">
                 <div class="kpu-badge-text">
                     <strong>KPU Kabupaten Sumba Barat Daya</strong>
                     <span>Program Praktik Kerja Lapangan</span>
@@ -911,7 +417,30 @@
                 <div class="badge"><i class="fas fa-clock"></i> 25 Detik per Soal</div>
                 <div class="badge"><i class="fas fa-microchip"></i> Fokus Hardware</div>
             </div>
-            <button class="btn-primary" onclick="startQuiz()" aria-label="Mulai Kuis">
+
+            <!-- Input Nama -->
+            <div class="name-section">
+                <label class="name-label" for="studentName">
+                    <i class="fas fa-user" style="margin-right:4px"></i> Nama Lengkap
+                </label>
+                <div class="name-input-wrap">
+                    <input type="text" id="studentName" class="name-input"
+                           placeholder="Masukkan nama kamu..." maxlength="50"
+                           autocomplete="off" spellcheck="false">
+                    <i class="fas fa-pen"></i>
+                </div>
+                <div class="name-error" id="nameError">
+                    <i class="fas fa-exclamation-circle"></i> Nama harus diisi sebelum mulai kuis
+                </div>
+            </div>
+
+            <!-- Skor Terbaik -->
+            <div class="best-score-badge" id="bestScoreBadge">
+                <i class="fas fa-trophy"></i>
+                <span>Skor terbaik kamu: <strong id="bestScoreValue">0</strong>/10</span>
+            </div>
+
+            <button class="btn-primary" id="btnStart" onclick="startQuiz()" aria-label="Mulai Kuis">
                 Mulai Kuis <i class="fas fa-arrow-right" style="margin-left:8px"></i>
             </button>
 
@@ -954,8 +483,7 @@
         <!-- ===== RESULT SCREEN ===== -->
         <div class="screen" id="resultScreen">
             <div class="kpu-badge" style="margin-bottom:20px">
-                <img src="logo-kpu.png" alt="Logo KPU" class="kpu-logo"
-                     onerror="this.style.display='none'">
+                <img src="logo-kpu.png" alt="Logo KPU" class="kpu-logo" onerror="this.style.display='none'">
                 <div class="kpu-badge-text">
                     <strong>KPU Kabupaten Sumba Barat Daya</strong>
                     <span>Hasil Evaluasi PKL</span>
@@ -988,6 +516,15 @@
                         <div class="stat-desc">Waktu</div>
                     </div>
                 </div>
+
+                <div class="saved-badge" id="savedBadge">
+                    <i class="fas fa-check-circle"></i>
+                    <span>Nilai tersimpan untuk <strong id="savedName"></strong></span>
+                </div>
+                <div class="new-best-badge" id="newBestBadge">
+                    <i class="fas fa-star"></i>
+                    <span>Skor terbaik baru!</span>
+                </div>
             </div>
 
             <div class="review-section">
@@ -1015,115 +552,70 @@
     </div>
 
     <script>
-        // ===== DATA SOAL — Perangkat Keras Jaringan Komputer =====
+        // ===== KONFIGURASI KUIS =====
+        const QUIZ_NAME = 'Perangkat Keras Jaringan';
+        const QUIZ_FILE = 'kuis-perangkat-keras.html';
+        const STORAGE_KEY = 'kpu_quiz_scores';
+
+        // ===== DATA SOAL =====
         const questions = [
             {
                 q: "Perangkat yang berfungsi sebagai pusat penghubung semua komputer dalam topologi Star, serta mampu mengirim data hanya ke port tujuan yang tepat, disebut...",
-                options: [
-                    "Hub",
-                    "Switch",
-                    "Repeater",
-                    "Modem"
-                ],
+                options: ["Hub", "Switch", "Repeater", "Modem"],
                 answer: 1,
                 explanation: "Switch adalah perangkat pusat pada topologi Star yang lebih cerdas dari Hub. Switch mengirim data hanya ke port tujuan yang tepat berdasarkan MAC Address, sehingga lalu lintas jaringan lebih efisien dan mengurangi tabrakan data (collision)."
             },
             {
                 q: "Di ruang server KPU, terdapat perangkat yang menghubungkan jaringan lokal (LAN) ke jaringan internet dan meneruskan paket data berdasarkan alamat IP. Perangkat tersebut adalah...",
-                options: [
-                    "Switch",
-                    "Hub",
-                    "Router",
-                    "Bridge"
-                ],
+                options: ["Switch", "Hub", "Router", "Bridge"],
                 answer: 2,
                 explanation: "Router adalah perangkat jaringan yang menghubungkan dua atau lebih jaringan berbeda (misalnya LAN ke internet) dan meneruskan paket data berdasarkan alamat IP. Router juga bisa membagi koneksi internet ke semua komputer di kantor KPU."
             },
             {
                 q: "Setiap komputer harus memiliki kartu jaringan agar bisa terhubung ke jaringan. Kartu ini berfungsi mengubah data digital menjadi sinyal yang bisa ditransmisikan melalui kabel. Kartu tersebut disebut...",
-                options: [
-                    "VGA Card",
-                    "Sound Card",
-                    "NIC (Network Interface Card)",
-                    "RAM"
-                ],
+                options: ["VGA Card", "Sound Card", "NIC (Network Interface Card)", "RAM"],
                 answer: 2,
                 explanation: "NIC (Network Interface Card) atau kartu jaringan adalah perangkat keras yang dipasang pada komputer agar bisa terhubung ke jaringan. NIC mengubah data digital dari komputer menjadi sinyal yang bisa dikirim melalui kabel jaringan, dan sebaliknya."
             },
             {
                 q: "Kabel yang paling umum digunakan untuk menghubungkan komputer ke switch di jaringan LAN kantor KPU adalah kabel...",
-                options: [
-                    "Kabel Koaksial",
-                    "Kabel UTP (Unshielded Twisted Pair)",
-                    "Kabel Serat Optik",
-                    "Kabel USB"
-                ],
+                options: ["Kabel Koaksial", "Kabel UTP (Unshielded Twisted Pair)", "Kabel Serat Optik", "Kabel USB"],
                 answer: 1,
                 explanation: "Kabel UTP (Unshielded Twisted Pair) adalah jenis kabel yang paling umum digunakan pada jaringan LAN. Kabel ini murah, mudah dipasang, dan mendukung kecepatan hingga 10 Gbps pada kategori tertentu. Di kantor KPU, kabel UTP Cat5e atau Cat6 lazim digunakan."
             },
             {
                 q: "Untuk menghubungkan jaringan KPU Kab. Sumba Barat Daya dengan internet melalui jalur telepon, diperlukan perangkat yang mengubah sinyal digital menjadi sinyal analog dan sebaliknya. Perangkat tersebut adalah...",
-                options: [
-                    "Router",
-                    "Switch",
-                    "Modem",
-                    "Repeater"
-                ],
+                options: ["Router", "Switch", "Modem", "Repeater"],
                 answer: 2,
                 explanation: "Modem (Modulator-Demodulator) berfungsi mengubah sinyal digital dari komputer menjadi sinyal analog agar bisa ditransmisikan melalui jalur telepon, dan sebaliknya. Tanpa modem, jaringan LAN tidak bisa terhubung ke internet."
             },
             {
                 q: "Saat sinyal Wi-Fi di ruang rapat KPU melemah karena jauh dari router, perangkat yang dapat memperkuat dan memperluas jangkauan sinyal tersebut adalah...",
-                options: [
-                    "Access Point / Repeater",
-                    "Switch",
-                    "Hub",
-                    "Bridge"
-                ],
+                options: ["Access Point / Repeater", "Switch", "Hub", "Bridge"],
                 answer: 0,
                 explanation: "Access Point (AP) atau Repeater berfungsi memperluas jangkauan jaringan nirkabel (Wi-Fi). AP menerima sinyal dari router kemudian menyebarkannya kembali ke area yang lebih luas, sehingga sinyal Wi-Fi bisa menjangkau ruangan yang jauh seperti ruang rapat KPU."
             },
             {
                 q: "Kabel yang menggunakan cahaya sebagai media transmisi data, memiliki kecepatan sangat tinggi, dan tahan terhadap gangguan elektromagnetik disebut kabel...",
-                options: [
-                    "Kabel UTP",
-                    "Kabel STP",
-                    "Kabel Serat Optik (Fiber Optic)",
-                    "Kabel Koaksial"
-                ],
+                options: ["Kabel UTP", "Kabel STP", "Kabel Serat Optik (Fiber Optic)", "Kabel Koaksial"],
                 answer: 2,
                 explanation: "Kabel Serat Optik (Fiber Optic) menggunakan cahaya (bukan listrik) untuk mentransmisikan data. Keunggulannya: kecepatan sangat tinggi (hingga Tbps), jarak jangkauan jauh, dan tahan gangguan elektromagnetik. Biasa digunakan untuk backbone jaringan antar gedung."
             },
             {
                 q: "Perangkat yang berfungsi untuk membagi satu jalur kabel jaringan menjadi beberapa jalur, mirip seperti stop kontak listrik, tetapi mengirim data ke semua port sekaligus tanpa filter, disebut...",
-                options: [
-                    "Switch",
-                    "Router",
-                    "Hub",
-                    "Modem"
-                ],
+                options: ["Switch", "Router", "Hub", "Modem"],
                 answer: 2,
                 explanation: "Hub adalah perangkat pemusat sederhana yang membagi koneksi jaringan ke beberapa port. Berbeda dengan Switch, Hub mengirim data ke semua port tanpa memfilter, sehingga sering terjadi collision (tabrakan data). Hub sudah jarang digunakan dan digantikan Switch."
             },
             {
                 q: "Perangkat keras yang berfungsi sebagai penghubung dua segmen jaringan LAN yang menggunakan protokol sama, serta menyaring lalu lintas data berdasarkan MAC Address, disebut...",
-                options: [
-                    "Router",
-                    "Gateway",
-                    "Bridge",
-                    "Firewall"
-                ],
+                options: ["Router", "Gateway", "Bridge", "Firewall"],
                 answer: 2,
                 explanation: "Bridge adalah perangkat yang menghubungkan dua segmen jaringan LAN yang menggunakan protokol sama. Bridge menyaring (filter) lalu lintas data berdasarkan MAC Address, sehingga data hanya dikirim ke segmen yang tepat dan mengurangi trafik yang tidak perlu."
             },
             {
                 q: "Di kantor KPU, keamanan data rekapitulasi suara sangat krusial. Perangkat keras yang memantau dan menyaring lalu lintas data masuk-keluar jaringan untuk mencegah akses tidak sah disebut...",
-                options: [
-                    "Switch",
-                    "Repeater",
-                    "Access Point",
-                    "Firewall"
-                ],
+                options: ["Switch", "Repeater", "Access Point", "Firewall"],
                 answer: 3,
                 explanation: "Firewall adalah perangkat keamanan jaringan yang memantau, menyaring, dan mengontrol lalu lintas data berdasarkan aturan keamanan yang ditetapkan. Di KPU, firewall sangat penting untuk melindungi data sensitif seperti rekapitulasi suara dari serangan siber dan akses tidak sah."
             }
@@ -1137,6 +629,53 @@
         let totalTime = 0;
         let userAnswers = [];
         let quizStartTime = 0;
+        let studentName = '';
+        let shuffledQuestions = [];
+
+        // ===== UTILITY: Simpan & Baca Nilai dari localStorage =====
+        function getScores() {
+            try {
+                return JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
+            } catch (e) {
+                return [];
+            }
+        }
+
+        function saveScore(name, sc, total, timeTaken) {
+            const scores = getScores();
+            scores.push({
+                id: Date.now(),
+                quizName: QUIZ_NAME,
+                quizFile: QUIZ_FILE,
+                studentName: name,
+                score: sc,
+                total: total,
+                percentage: Math.round((sc / total) * 100),
+                timeTaken: timeTaken,
+                date: new Date().toISOString()
+            });
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(scores));
+        }
+
+        function getBestScore(name) {
+            const scores = getScores();
+            const myScores = scores.filter(s =>
+                s.quizFile === QUIZ_FILE &&
+                s.studentName.toLowerCase() === name.toLowerCase()
+            );
+            if (myScores.length === 0) return null;
+            return Math.max(...myScores.map(s => s.score));
+        }
+
+        // ===== SHUFFLE (Fisher-Yates) =====
+        function shuffleArray(arr) {
+            const a = [...arr];
+            for (let i = a.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [a[i], a[j]] = [a[j], a[i]];
+            }
+            return a;
+        }
 
         // ===== FLOATING NODES =====
         function createFloatingNodes() {
@@ -1148,7 +687,6 @@
                 node.style.top = Math.random() * 100 + '%';
                 node.style.animationDelay = Math.random() * 10 + 's';
                 node.style.animationDuration = (12 + Math.random() * 8) + 's';
-
                 const angle = Math.random() * 360;
                 node.innerHTML = `
                     <div class="node-core"></div>
@@ -1160,13 +698,40 @@
         }
         createFloatingNodes();
 
+        // ===== TAMPILKAN SKOR TERBAIK SAAT LOAD =====
+        function updateBestScoreDisplay() {
+            const nameInput = document.getElementById('studentName');
+            const badge = document.getElementById('bestScoreBadge');
+            const value = document.getElementById('bestScoreValue');
+            const name = nameInput.value.trim();
+            if (name.length >= 2) {
+                const best = getBestScore(name);
+                if (best !== null) {
+                    value.textContent = best;
+                    badge.classList.add('show');
+                    return;
+                }
+            }
+            badge.classList.remove('show');
+        }
+
+        document.getElementById('studentName').addEventListener('input', function() {
+            document.getElementById('nameError').classList.remove('show');
+            updateBestScoreDisplay();
+        });
+
+        // Enter key untuk mulai
+        document.getElementById('studentName').addEventListener('keydown', function(e) {
+            if (e.key === 'Enter') startQuiz();
+        });
+
         // ===== TOAST =====
         function showToast(message, type) {
             const container = document.getElementById('toastContainer');
             const toast = document.createElement('div');
             toast.className = `toast toast-${type}`;
-            const icon = type === 'success' ? 'fa-check-circle' : 'fa-times-circle';
-            toast.innerHTML = `<i class="fas ${icon}"></i> ${message}`;
+            const icons = { success: 'fa-check-circle', error: 'fa-times-circle', info: 'fa-info-circle' };
+            toast.innerHTML = `<i class="fas ${icons[type] || icons.info}"></i> ${message}`;
             container.appendChild(toast);
             setTimeout(() => toast.remove(), 3000);
         }
@@ -1179,9 +744,33 @@
 
         // ===== START =====
         function startQuiz() {
+            const nameInput = document.getElementById('studentName');
+            const name = nameInput.value.trim();
+
+            if (name.length < 2) {
+                document.getElementById('nameError').classList.add('show');
+                nameInput.focus();
+                return;
+            }
+
+            studentName = name;
             currentQuestion = 0;
             score = 0;
             userAnswers = [];
+
+            // Acak soal dan opsi
+            shuffledQuestions = shuffleArray(questions).map(q => {
+                const correctText = q.options[q.answer];
+                const shuffledOpts = shuffleArray(q.options);
+                const newAnswer = shuffledOpts.indexOf(correctText);
+                return {
+                    q: q.q,
+                    options: shuffledOpts,
+                    answer: newAnswer,
+                    explanation: q.explanation
+                };
+            });
+
             quizStartTime = Date.now();
             showScreen('quizScreen');
             loadQuestion();
@@ -1189,9 +778,9 @@
 
         // ===== LOAD QUESTION =====
         function loadQuestion() {
-            const q = questions[currentQuestion];
-            document.getElementById('progressText').textContent = `${currentQuestion + 1} / ${questions.length}`;
-            document.getElementById('progressBar').style.width = `${((currentQuestion + 1) / questions.length) * 100}%`;
+            const q = shuffledQuestions[currentQuestion];
+            document.getElementById('progressText').textContent = `${currentQuestion + 1} / ${shuffledQuestions.length}`;
+            document.getElementById('progressBar').style.width = `${((currentQuestion + 1) / shuffledQuestions.length) * 100}%`;
             document.getElementById('questionNumber').textContent = `Soal ${String(currentQuestion + 1).padStart(2, '0')}`;
             document.getElementById('questionText').textContent = q.q;
 
@@ -1219,23 +808,17 @@
             timeLeft = 25;
             document.getElementById('timerValue').textContent = timeLeft;
             document.getElementById('timerDisplay').classList.remove('warning');
-
             clearInterval(timer);
             timer = setInterval(() => {
                 timeLeft--;
                 document.getElementById('timerValue').textContent = timeLeft;
-                if (timeLeft <= 5) {
-                    document.getElementById('timerDisplay').classList.add('warning');
-                }
-                if (timeLeft <= 0) {
-                    clearInterval(timer);
-                    autoTimeout();
-                }
+                if (timeLeft <= 5) document.getElementById('timerDisplay').classList.add('warning');
+                if (timeLeft <= 0) { clearInterval(timer); autoTimeout(); }
             }, 1000);
         }
 
         function autoTimeout() {
-            const q = questions[currentQuestion];
+            const q = shuffledQuestions[currentQuestion];
             const btns = document.querySelectorAll('.option-btn');
             btns.forEach((btn, i) => {
                 btn.classList.add('disabled');
@@ -1250,7 +833,7 @@
         // ===== SELECT ANSW =====
         function selectAnswer(index) {
             clearInterval(timer);
-            const q = questions[currentQuestion];
+            const q = shuffledQuestions[currentQuestion];
             const btns = document.querySelectorAll('.option-btn');
             const isCorrect = index === q.answer;
 
@@ -1260,12 +843,8 @@
                 if (i === index && !isCorrect) btn.classList.add('wrong');
             });
 
-            if (isCorrect) {
-                score++;
-                showToast("Jawaban benar!", "success");
-            } else {
-                showToast("Jawaban salah!", "error");
-            }
+            if (isCorrect) { score++; showToast("Jawaban benar!", "success"); }
+            else { showToast("Jawaban salah!", "error"); }
 
             userAnswers.push({ selected: index, correct: q.answer });
             showFeedback(isCorrect, q.explanation);
@@ -1283,11 +862,8 @@
         // ===== NEXT =====
         function nextQuestion() {
             currentQuestion++;
-            if (currentQuestion < questions.length) {
-                loadQuestion();
-            } else {
-                showResult();
-            }
+            if (currentQuestion < shuffledQuestions.length) { loadQuestion(); }
+            else { showResult(); }
         }
 
         // ===== RESULT =====
@@ -1295,10 +871,15 @@
             totalTime = Math.round((Date.now() - quizStartTime) / 1000);
             showScreen('resultScreen');
 
+            // Simpan nilai ke localStorage
+            const prevBest = getBestScore(studentName);
+            saveScore(studentName, score, shuffledQuestions.length, totalTime);
+            const isNewBest = (prevBest === null || score > prevBest);
+
             const scoreEl = document.getElementById('scoreValue');
             const ring = document.getElementById('scoreRing');
             const circumference = 2 * Math.PI * 68;
-            const pct = score / questions.length;
+            const pct = score / shuffledQuestions.length;
 
             let ringColor = 'var(--danger)';
             if (pct >= 0.8) ringColor = 'var(--success)';
@@ -1307,10 +888,7 @@
 
             ring.style.stroke = ringColor;
             ring.style.strokeDashoffset = circumference;
-
-            setTimeout(() => {
-                ring.style.strokeDashoffset = circumference - (circumference * pct);
-            }, 200);
+            setTimeout(() => { ring.style.strokeDashoffset = circumference - (circumference * pct); }, 200);
 
             let counter = 0;
             const interval = setInterval(() => {
@@ -1322,26 +900,35 @@
             const msgEl = document.getElementById('resultMessage');
             const detEl = document.getElementById('resultDetail');
             if (pct >= 0.9) {
-                msgEl.textContent = "Luar Biasa!";
-                msgEl.style.color = 'var(--success)';
+                msgEl.textContent = "Luar Biasa!"; msgEl.style.color = 'var(--success)';
                 detEl.textContent = "Kamu menguasai perangkat keras jaringan komputer dengan sangat baik. Siap mengaplikasikannya di KPU!";
             } else if (pct >= 0.7) {
-                msgEl.textContent = "Bagus Sekali!";
-                msgEl.style.color = 'var(--success)';
+                msgEl.textContent = "Bagus Sekali!"; msgEl.style.color = 'var(--success)';
                 detEl.textContent = "Pemahamanmu tentang hardware jaringan sudah cukup baik. Sedikit lagi sempurna untuk dunia kerja di KPU!";
             } else if (pct >= 0.5) {
-                msgEl.textContent = "Cukup Baik";
-                msgEl.style.color = 'var(--warning)';
+                msgEl.textContent = "Cukup Baik"; msgEl.style.color = 'var(--warning)';
                 detEl.textContent = "Kamu sudah memahami beberapa perangkat keras jaringan. Ayo pelajari lagi agar lebih siap di KPU!";
             } else {
-                msgEl.textContent = "Perlu Belajar Lagi";
-                msgEl.style.color = 'var(--danger)';
+                msgEl.textContent = "Perlu Belajar Lagi"; msgEl.style.color = 'var(--danger)';
                 detEl.textContent = "Jangan menyerah! Pelajari kembali perangkat keras jaringan komputer agar lebih siap bekerja di KPU.";
             }
 
             document.getElementById('statCorrect').textContent = score;
-            document.getElementById('statWrong').textContent = questions.length - score;
+            document.getElementById('statWrong').textContent = shuffledQuestions.length - score;
             document.getElementById('statTime').textContent = totalTime + 's';
+
+            // Tampilkan badge tersimpan
+            document.getElementById('savedName').textContent = studentName;
+            document.getElementById('savedBadge').style.display = 'inline-flex';
+
+            // Tampilkan badge skor terbaik baru
+            const newBestBadge = document.getElementById('newBestBadge');
+            if (isNewBest && score > 0) {
+                newBestBadge.classList.add('show');
+                showToast("Skor terbaik baru!", "info");
+            } else {
+                newBestBadge.classList.remove('show');
+            }
 
             if (pct >= 0.7) launchConfetti();
             buildReview();
@@ -1355,11 +942,9 @@
             document.getElementById('reviewChevron').style.transform = '';
 
             const labels = ['A', 'B', 'C', 'D'];
-
-            questions.forEach((q, i) => {
+            shuffledQuestions.forEach((q, i) => {
                 const ua = userAnswers[i];
                 const isCorrect = ua.selected === ua.correct;
-
                 const item = document.createElement('div');
                 item.className = `review-item ${isCorrect ? 'item-correct' : 'item-wrong'}`;
 
@@ -1390,7 +975,9 @@
 
         // ===== RESTART =====
         function restartQuiz() {
+            // Kembali ke start screen, nama sudah terisi
             showScreen('startScreen');
+            updateBestScoreDisplay();
         }
 
         // ===== CONFETTI =====
@@ -1399,32 +986,24 @@
             const ctx = canvas.getContext('2d');
             canvas.width = window.innerWidth;
             canvas.height = window.innerHeight;
-
             const particles = [];
             const colors = ['#00e5a0', '#00c9db', '#f4a261', '#0d9488', '#ff6b6b', '#ffffff'];
-
             for (let i = 0; i < 120; i++) {
                 particles.push({
                     x: Math.random() * canvas.width,
                     y: Math.random() * canvas.height - canvas.height,
-                    w: Math.random() * 10 + 4,
-                    h: Math.random() * 6 + 3,
+                    w: Math.random() * 10 + 4, h: Math.random() * 6 + 3,
                     color: colors[Math.floor(Math.random() * colors.length)],
-                    vy: Math.random() * 3 + 2,
-                    vx: (Math.random() - 0.5) * 2,
-                    rot: Math.random() * 360,
-                    rotSpeed: (Math.random() - 0.5) * 8
+                    vy: Math.random() * 3 + 2, vx: (Math.random() - 0.5) * 2,
+                    rot: Math.random() * 360, rotSpeed: (Math.random() - 0.5) * 8
                 });
             }
-
             let frame = 0;
             function animate() {
                 ctx.clearRect(0, 0, canvas.width, canvas.height);
                 frame++;
                 particles.forEach(p => {
-                    p.y += p.vy;
-                    p.x += p.vx;
-                    p.rot += p.rotSpeed;
+                    p.y += p.vy; p.x += p.vx; p.rot += p.rotSpeed;
                     ctx.save();
                     ctx.translate(p.x, p.y);
                     ctx.rotate(p.rot * Math.PI / 180);
@@ -1433,11 +1012,8 @@
                     ctx.fillRect(-p.w / 2, -p.h / 2, p.w, p.h);
                     ctx.restore();
                 });
-                if (frame < 200) {
-                    requestAnimationFrame(animate);
-                } else {
-                    ctx.clearRect(0, 0, canvas.width, canvas.height);
-                }
+                if (frame < 200) requestAnimationFrame(animate);
+                else ctx.clearRect(0, 0, canvas.width, canvas.height);
             }
             animate();
         }
