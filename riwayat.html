@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Riwayat Nilai - KPU Kab. Sumba Barat Daya</title>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <style>
+        :root {
+            --bg: #080b14;
+            --bg2: #0e1220;
+            --card: #131829;
+            --card-hover: #1a2040;
+            --border: #252d52;
+            --fg: #eef0f8;
+            --muted: #8a94b8;
+            --accent: #00e5a0;
+            --accent2: #00c9db;
+            --teal: #0d9488;
+            --danger: #ff4d6a;
+            --warning: #ffb347;
+            --success: #00e5a0;
+            --gold: #f4a261;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Space Grotesk', sans-serif;
+            background: var(--bg);
+            color: var(--fg);
+            min-height: 100vh;
+            background-image:
+                radial-gradient(circle at 15% 50%, rgba(0,229,160,0.05) 0%, transparent 50%),
+                radial-gradient(circle at 85% 20%, rgba(0,201,219,0.06) 0%, transparent 50%);
+        }
+
+        .container {
+            max-width: 720px; margin: 0 auto; padding: 24px 16px;
+        }
+
+        .back-link {
+            display: inline-flex; align-items: center; gap: 6px;
+            color: var(--muted); font-size: 13px; text-decoration: none;
+            margin-bottom: 20px; transition: color 0.2s; font-weight: 500;
+        }
+        .back-link:hover { color: var(--accent); }
+
+        .page-header {
+            text-align: center; margin-bottom: 32px;
+        }
+        .page-header h1 {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 22px; font-weight: 700; margin-bottom: 6px;
+        }
+        .page-header h1 .hl {
+            background: linear-gradient(135deg, var(--accent), var(--accent2));
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+        }
+        .page-header p { color: var(--muted); font-size: 14px; }
+
+        /* ===== FILTER ===== */
+        .filter-bar {
+            display: flex; gap: 10px; margin-bottom: 20px; flex-wrap: wrap;
+        }
+        .filter-btn {
+            background: var(--card); border: 1px solid var(--border); border-radius: 10px;
+            padding: 8px 16px; font-family: 'Space Grotesk', sans-serif;
+            font-size: 12px; font-weight: 600; color: var(--muted);
+            cursor: pointer; transition: all 0.25s ease; white-space: nowrap;
+        }
+        .filter-btn:hover { border-color: var(--accent); color: var(--fg); }
+        .filter-btn.active { background: var(--accent); color: var(--bg); border-color: var(--accent); }
+
+        /* ===== STATS ===== */
+        .stats-grid {
+            display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px;
+            margin-bottom: 24px;
+        }
+        .stat-card {
+            background: var(--card); border: 1px solid var(--border);
+            border-radius: 12px; padding: 16px; text-align: center;
+        }
+        .stat-card .num {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 28px; font-weight: 700;
+        }
+        .stat-card .num.green { color: var(--success); }
+        .stat-card .num.gold { color: var(--gold); }
+        .stat-card .num.blue { color: var(--accent2); }
+        .stat-card .label { font-size: 11px; color: var(--muted); margin-top: 4px; }
+
+        /* ===== SCORE LIST ===== */
+        .score-list { display: flex; flex-direction: column; gap: 10px; }
+
+        .score-item {
+            background: var(--card); border: 1px solid var(--border);
+            border-radius: 12px; padding: 16px 20px;
+            display: flex; align-items: center; gap: 14px;
+            transition: all 0.25s ease; animation: fadeSlideIn 0.3s ease;
+        }
+        .score-item:hover { border-color: var(--accent); background: var(--card-hover); }
+
+        @keyframes fadeSlideIn {
+            from { opacity: 0; transform: translateY(15px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .score-icon {
+            width: 44px; height: 44px; border-radius: 12px;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 18px; color: #fff; flex-shrink: 0;
+        }
+        .score-icon.red { background: linear-gradient(135deg, #e63946, #ff6b6b); }
+        .score-icon.teal { background: linear-gradient(135deg, #0d7377, #14b8a6); }
+        .score-icon.blue { background: linear-gradient(135deg, #2b6cb0, #4a9eff); }
+        .score-icon.green { background: linear-gradient(135deg, #1d8348, #2ecc71); }
+        .score-icon.orange { background: linear-gradient(135deg, #d97706, #f59e0b); }
+        .score-icon.pink { background: linear-gradient(135deg, #a21caf, #e879f9); }
+        .score-icon.purple { background: linear-gradient(135deg, #6d28d9, #a78bfa); }
+
+        .score-info { flex: 1; min-width: 0; }
+        .score-info .quiz-name { font-size: 14px; font-weight: 700; margin-bottom: 2px; }
+        .score-info .meta { font-size: 11px; color: var(--muted); display: flex; gap: 12px; flex-wrap: wrap; }
+
+        .score-result {
+            text-align: right; flex-shrink: 0;
+        }
+        .score-result .pct {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 22px; font-weight: 700;
+        }
+        .score-result .pct.high { color: var(--success); }
+        .score-result .pct.mid { color: var(--warning); }
+        .score-result .pct.low { color: var(--danger); }
+        .score-result .frac { font-size: 11px; color: var(--muted); }
+
+        .delete-btn {
+            background: none; border: 1px solid transparent; border-radius: 8px;
+            width: 32px; height: 32px; display: flex; align-items: center; justify-content: center;
+            color: var(--muted); cursor: pointer; transition: all 0.2s; flex-shrink: 0;
+            font-size: 13px;
+        }
+        .delete-btn:hover { color: var(--danger); border-color: var(--danger); background: rgba(255,77,106,0.08); }
+
+        /* ===== EMPTY STATE ===== */
+        .empty-state {
+            text-align: center; padding: 48px 20px; color: var(--muted);
+        }
+        .empty-state i { font-size: 48px; margin-bottom: 16px; opacity: 0.3; }
+        .empty-state p { font-size: 14px; line-height: 1.6; }
+
+        /* ===== CLEAR ALL ===== */
+        .clear-bar {
+            display: flex; justify-content: space-between; align-items: center;
+            margin-top: 24px; padding-top: 16px; border-top: 1px solid var(--border);
+        }
+        .clear-bar span { font-size: 12px; color: var(--muted); }
+        .btn-clear {
+            background: none; border: 1px solid var(--border); border-radius: 8px;
+            padding: 8px 16px; font-family: 'Space Grotesk', sans-serif;
+            font-size: 12px; font-weight: 600; color: var(--danger);
+            cursor: pointer; transition: all 0.2s;
+        }
+        .btn-clear:hover { border-color: var(--danger); background: rgba(255,77,106,0.08); }
+
+        /* ===== CONFIRM MODAL ===== */
+        .modal-overlay {
+            position: fixed; inset: 0; background: rgba(0,0,0,0.7);
+            z-index: 100; display: none; align-items: center; justify-content: center;
+            padding: 20px;
+        }
+        .modal-overlay.show { display: flex; }
+        .modal-box {
+            background: var(--card); border: 1px solid var(--border);
+            border-radius: 16px; padding: 28px; max-width: 380px; width: 100%;
+            text-align: center; animation: fadeSlideIn 0.3s ease;
+        }
+        .modal-box h3 { font-size: 18px; margin-bottom: 8px; }
+        .modal-box p { font-size: 13px; color: var(--muted); margin-bottom: 20px; line-height: 1.5; }
+        .modal-actions { display: flex; gap: 10px; justify-content: center; }
+        .modal-actions button {
+            padding: 10px 24px; border-radius: 10px; font-family: 'Space Grotesk', sans-serif;
+            font-size: 14px; font-weight: 600; cursor: pointer; transition: all 0.2s;
+        }
+        .btn-cancel { background: var(--bg2); border: 1px solid var(--border); color: var(--fg); }
+        .btn-cancel:hover { border-color: var(--muted); }
+        .btn-danger { background: var(--danger); border: 1px solid var(--danger); color: #fff; }
+        .btn-danger:hover { opacity: 0.85; }
+
+        .foot { margin-top: 28px; font-size: 11px; color: var(--muted); opacity: 0.4; text-align: center; line-height: 1.5; }
+
+        @media (max-width: 600px) {
+            .stats-grid { grid-template-columns: 1fr; }
+            .score-item { flex-wrap: wrap; }
+            .score-result { width: 100%; text-align: left; margin-top: 4px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="index.html" class="back-link">
+            <i class="fas fa-arrow-left"></i> Kembali ke Menu Utama
+        </a>
+
+        <div class="page-header">
+            <h1>Riwayat <span class="hl">Nilai Kuis</span></h1>
+            <p>Semua hasil evaluasi yang pernah dikerjakan</p>
+        </div>
+
+        <div class="stats-grid" id="statsGrid">
+            <div class="stat-card">
+                <div class="num green" id="totalAttempts">0</div>
+                <div class="label">Total Percobaan</div>
+            </div>
+            <div class="stat-card">
+                <div class="num gold" id="avgScore">0%</div>
+                <div class="label">Rata-rata Skor</div>
+            </div>
+            <div class="stat-card">
+                <div class="num blue" id="bestScore">0%</div>
+                <div class="label">Skor Terbaik</div>
+            </div>
+        </div>
+
+        <div class="filter-bar" id="filterBar">
+            <button class="filter-btn active" data-filter="all">Semua</button>
+        </div>
+
+        <div class="score-list" id="scoreList"></div>
+
+        <div class="clear-bar" id="clearBar" style="display:none">
+            <span>Data disimpan di browser (localStorage)</span>
+            <button class="btn-clear" onclick="confirmClearAll()">
+                <i class="fas fa-trash" style="margin-right:4px"></i> Hapus Semua
+            </button>
+        </div>
+
+        <div class="foot">
+            KPU Kabupaten Sumba Barat Daya<br>
+            Nusa Tenggara Timur
+        </div>
+    </div>
+
+    <!-- Modal Konfirmasi -->
+    <div class="modal-overlay" id="modalOverlay">
+        <div class="modal-box">
+            <h3>Hapus Semua Riwayat?</h3>
+            <p>Semua data nilai kuis akan dihapus secara permanen dan tidak bisa dikembalikan.</p>
+            <div class="modal-actions">
+                <button class="btn-cancel" onclick="closeModal()">Batal</button>
+                <button class="btn-danger" onclick="clearAll()">Ya, Hapus</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const STORAGE_KEY = 'kpu_quiz_scores';
+
+        // Mapping kuis ke warna ikon
+        const quizMeta = {
+            'kuis-jaringan.html': { icon: 'fa-network-wired', color: 'red', name: 'Jaringan Komputer' },
+            'kuis-perangkat-keras.html': { icon: 'fa-server', color: 'teal', name: 'Perangkat Keras Jaringan' },
+            'kuis-word.html': { icon: 'fa-file-word', color: 'blue', name: 'Microsoft Word' },
+            'kuis-excel.html': { icon: 'fa-table', color: 'green', name: 'Microsoft Excel' },
+            'kuis-video.html': { icon: 'fa-film', color: 'orange', name: 'Produksi Video' },
+            'kuis-desaingrafis.html': { icon: 'fa-palette', color: 'pink', name: 'Desain Grafis (Canva)' },
+            'kuis-powerpoint.html': { icon: 'fa-desktop', color: 'purple', name: 'Microsoft PowerPoint' }
+        };
+
+        function getScores() {
+            try { return JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]'); }
+            catch (e) { return []; }
+        }
+
+        let currentFilter = 'all';
+
+        function render() {
+            const scores = getScores();
+            const list = document.getElementById('scoreList');
+            const clearBar = document.getElementById('clearBar');
+
+            // Statistik
+            const totalAttempts = scores.length;
+            const avgScore = totalAttempts > 0
+                ? Math.round(scores.reduce((s, r) => s + r.percentage, 0) / totalAttempts)
+                : 0;
+            const bestScore = totalAttempts > 0
+                ? Math.max(...scores.map(r => r.percentage))
+                : 0;
+
+            document.getElementById('totalAttempts').textContent = totalAttempts;
+            document.getElementById('avgScore').textContent = avgScore + '%';
+            document.getElementById('bestScore').textContent = bestScore + '%';
+
+            // Filter buttons
+            const quizFiles = [...new Set(scores.map(s => s.quizFile))];
+            const filterBar = document.getElementById('filterBar');
+            filterBar.innerHTML = '<button class="filter-btn' + (currentFilter === 'all' ? ' active' : '') + '" data-filter="all">Semua</button>';
+            quizFiles.forEach(f => {
+                const meta = quizMeta[f] || { name: f, color: 'teal' };
+                const active = currentFilter === f ? ' active' : '';
+                filterBar.innerHTML += `<button class="filter-btn${active}" data-filter="${f}">${meta.name}</button>`;
+            });
+
+            // Event listener filter
+            filterBar.querySelectorAll('.filter-btn').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    currentFilter = btn.dataset.filter;
+                    filterBar.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+                    render();
+                });
+            });
+
+            // Filter scores
+            const filtered = currentFilter === 'all'
+                ? scores
+                : scores.filter(s => s.quizFile === currentFilter);
+
+            // Sort terbaru di atas
+            filtered.sort((a, b) => b.id - a.id);
+
+            if (filtered.length === 0) {
+                list.innerHTML = `
+                    <div class="empty-state">
+                        <i class="fas fa-clipboard-list"></i>
+                        <p>Belum ada riwayat nilai.${scores.length === 0 ? '<br>Kerjakan kuis terlebih dahulu.' : ''}</p>
+                    </div>
+                `;
+                clearBar.style.display = 'none';
+                return;
+            }
+
+            clearBar.style.display = 'flex';
+
+            list.innerHTML = '';
+            filtered.forEach((s, i) => {
+                const meta = quizMeta[s.quizFile] || { icon: 'fa-circle-question', color: 'teal', name: s.quizName || s.quizFile };
+                const pctClass = s.percentage >= 70 ? 'high' : s.percentage >= 50 ? 'mid' : 'low';
+                const date = new Date(s.date);
+                const dateStr = date.toLocaleDateString('id-ID', { day: 'numeric', month: 'short', year: 'numeric' });
+                const timeStr = date.toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit' });
+
+                const item = document.createElement('div');
+                item.className = 'score-item';
+                item.style.animationDelay = (i * 0.05) + 's';
+                item.innerHTML = `
+                    <div class="score-icon ${meta.color}"><i class="fas ${meta.icon}"></i></div>
+                    <div class="score-info">
+                        <div class="quiz-name">${meta.name}</div>
+                        <div class="meta">
+                            <span><i class="fas fa-user" style="margin-right:3px"></i>${s.studentName}</span>
+                            <span><i class="fas fa-calendar" style="margin-right:3px"></i>${dateStr}, ${timeStr}</span>
+                            <span><i class="fas fa-clock" style="margin-right:3px"></i>${s.timeTaken}s</span>
+                        </div>
+                    </div>
+                    <div class="score-result">
+                        <div class="pct ${pctClass}">${s.percentage}%</div>
+                        <div class="frac">${s.score}/${s.total}</div>
+                    </div>
+                    <button class="delete-btn" onclick="deleteScore(${s.id})" title="Hapus" aria-label="Hapus nilai ini">
+                        <i class="fas fa-times"></i>
+                    </button>
+                `;
+                list.appendChild(item);
+            });
+        }
+
+        function deleteScore(id) {
+            const scores = getScores().filter(s => s.id !== id);
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(scores));
+            render();
+        }
+
+        function confirmClearAll() {
+            document.getElementById('modalOverlay').classList.add('show');
+        }
+
+        function closeModal() {
+            document.getElementById('modalOverlay').classList.remove('show');
+        }
+
+        function clearAll() {
+            localStorage.removeItem(STORAGE_KEY);
+            closeModal();
+            render();
+        }
+
+        // Klik luar modal untuk tutup
+        document.getElementById('modalOverlay').addEventListener('click', function(e) {
+            if (e.target === this) closeModal();
+        });
+
+        // ESC untuk tutup modal
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') closeModal();
+        });
+
+        render();
+    </script>
+</body>
+</html>
